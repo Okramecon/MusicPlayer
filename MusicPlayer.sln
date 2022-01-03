@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.32002.261
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MusicPlayer.API", "MusicPlayer.API\MusicPlayer.API.csproj", "{210F6C5A-8C13-4078-B562-7FEC831C1348}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MusicPlayer.API", "MusicPlayer.API\MusicPlayer.API.csproj", "{210F6C5A-8C13-4078-B562-7FEC831C1348}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MusicPlayer.Models", "Models\MusicPlayer.Models.csproj", "{F5C432D1-69FD-411A-95F7-BFB9DE43EDFB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MusicPlayer.Models", "Models\MusicPlayer.Models.csproj", "{F5C432D1-69FD-411A-95F7-BFB9DE43EDFB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MusicPlayer.Authentificate", "MusicPlayer.Auth\MusicPlayer.Authentificate.csproj", "{D7D7E5D4-22E2-4BD6-9594-47796C2A22AD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MusicPlayer.Authenticate", "MusicPlayer.Authenticate\MusicPlayer.Authenticate.csproj", "{D7D7E5D4-22E2-4BD6-9594-47796C2A22AD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

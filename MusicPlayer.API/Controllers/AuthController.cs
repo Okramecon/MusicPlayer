@@ -1,6 +1,4 @@
-﻿using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using Models.RequestModels;
@@ -10,9 +8,7 @@ using MusicPlayer.Models;
 using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
 using System.Security.Claims;
-using System.Threading.Tasks;
 
 namespace MusicPlayer.API.Controllers
 {
@@ -21,12 +17,10 @@ namespace MusicPlayer.API.Controllers
     public class AuthController : ControllerBase
     {
         private readonly IOptions<AuthOptions> _authOptions;
-        private DbBaseContext _context;
         private AuthService _service;
         public AuthController(IOptions<AuthOptions> authOptions, DbBaseContext context)
         {
             _authOptions = authOptions;
-            _context = context;
             _service = new AuthService(context);
         }
 

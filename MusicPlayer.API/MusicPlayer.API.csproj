@@ -16,7 +16,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Models\MusicPlayer.Models.csproj" />
-    <ProjectReference Include="..\MusicPlayer.Auth\MusicPlayer.Authentificate.csproj" />
+    <ProjectReference Include="..\MusicPlayer.Authenticate\MusicPlayer.Authenticate.csproj" />
   </ItemGroup>
 
 </Project>
