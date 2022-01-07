@@ -87,7 +87,7 @@
           <button
             type="button"
             @click="actionGenre()"
-            class="block-button btn welcome__progress"
+            class="block-button btn welcome"
           >
             <span v-if="currentAction == 'Delete'"> Yes </span>
             <span v-else> {{ currentAction }} </span>

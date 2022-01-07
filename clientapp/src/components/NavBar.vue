@@ -1,7 +1,10 @@
 <template>
-  <nav class="navbar navbar-expand-lg navbar-dark">
+  <nav
+    class="navbar navbar-expand-lg navbar-dark"
+    style="font-size: 1.3rem; font-weight: 700"
+  >
     <div class="container-fluid container">
-      <router-link class="navbar-brand" to="/"> Music Player </router-link>
+      <router-link class="navbar-brand" to="/"> </router-link>
       <button
         class="navbar-toggler"
         type="button"
@@ -88,7 +91,17 @@ export default defineComponent({});
   background: linear-gradient(
     135deg,
     rgba(0, 0, 0, 1) 0%,
-    rgba(228, 65, 173, 1) 100%
+    rgba(250, 81, 110, 1) 52%,
+    rgba(210, 49, 120, 1) 100%
   );
+}
+
+.navbar-brand {
+  background-image: url("https://cdn.discordapp.com/attachments/929061747170635826/929124385787346994/6610336475_926baa46-4849-4458-9cca-6cabe321c151.png");
+  width: 200px;
+  height: 77px;
+  background-repeat: no-repeat;
+  background-size: cover;
+  stroke: white;
 }
 </style>

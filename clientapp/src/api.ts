@@ -2,6 +2,7 @@ import Genre from "./models/Genre";
 import axios, { AxiosInstance } from "axios";
 import { AccountResponse } from "./models/response/AccountResponse";
 import Author from "./models/Author";
+import Playlist from "./models/PlayList";
 
 const apiClient: AxiosInstance = axios.create({
   baseURL: "http://localhost:52455/api",
@@ -55,4 +56,25 @@ export async function EditAuthor(author: Author): Promise<Author> {
 
 export async function DeleteAuthor(id: number): Promise<number> {
   return apiClient.delete("/authors/" + id).then((res) => res.data);
+}
+
+// Playlists
+export async function GetAllPlaylists(): Promise<Playlist[]> {
+  return apiClient.get("/playlists/").then((res) => res.data);
+}
+
+export async function CreatePlaylist(playlist: Playlist): Promise<Playlist> {
+  return apiClient
+    .post("/playlists/", JSON.stringify(playlist))
+    .then((res) => res.data);
+}
+
+export async function EditPlaylist(playlist: Playlist): Promise<Playlist> {
+  return apiClient
+    .put("/playlists/", JSON.stringify(playlist))
+    .then((res) => res.data);
+}
+
+export async function DeletePlaylist(id: number): Promise<number> {
+  return apiClient.delete("/playlists/" + id).then((res) => res.data);
 }

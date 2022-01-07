@@ -19,6 +19,7 @@
     margin: 15px;
     transition: 0.5s;
     cursor: pointer;
+    color: white;
   }
 
   .block-button {
@@ -38,14 +39,9 @@
     transform: scale(1.1);
   }
   
-  .welcome,
-  .welcome__progress {
-    background: rgb(0, 0, 0);
-    background: linear-gradient(
-      135deg,
-      rgba(0, 0, 0, 1) 0%,
-      rgba(228, 65, 173, 1) 100%
-    );
+  .welcome {
+    background: rgb(0,0,0);
+background: linear-gradient(135deg, rgba(0,0,0,1) 0%, rgba(250,81,110,1) 52%, rgba(210,49,120,1) 100%);
     background-size: 100%;
     background-position: center;
     background-attachment: fixed;
