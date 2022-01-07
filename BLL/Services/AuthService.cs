@@ -20,11 +20,5 @@ namespace MusicPlayer.Logics
             var existAccount = _context.Accounts.Include(x => x.Role).FirstOrDefault(a => a.UserName == username && a.Password == password);
             return existAccount;
         }
-
-        public List<Account> GetAllAccounts()
-        {
-            var accounts = _context.Accounts.ToList();
-            return accounts;
-        }
     }
 }

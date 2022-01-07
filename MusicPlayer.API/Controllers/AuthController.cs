@@ -18,12 +18,10 @@ namespace MusicPlayer.API.Controllers
     public class AuthController : ControllerBase
     {
         private readonly IOptions<AuthOptions> _authOptions;
-        private AppDbContext _context;
         private AuthService _service;
         public AuthController(IOptions<AuthOptions> authOptions, AppDbContext context)
         {
             _authOptions = authOptions;
-            _context = context;
             _service = new AuthService(context);
         }
 
