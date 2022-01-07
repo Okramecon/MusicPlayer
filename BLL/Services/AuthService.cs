@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using MusicPlayer.API;
-using MusicPlayer.Models;
+using MusicPlayer.DAL;
+using MusicPlayer.DAL.Entities;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -8,9 +8,9 @@ namespace MusicPlayer.Logics
 {
     public class AuthService
     {
-        private DbBaseContext _context;
+        private AppDbContext _context;
 
-        public AuthService(DbBaseContext context)
+        public AuthService(AppDbContext context)
         {
             _context = context;
         }
