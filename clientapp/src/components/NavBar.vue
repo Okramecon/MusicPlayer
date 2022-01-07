@@ -1,5 +1,5 @@
 <template>
-  <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+  <nav class="navbar navbar-expand-lg navbar-dark">
     <div class="container-fluid container">
       <router-link class="navbar-brand" to="/"> Music Player </router-link>
       <button
@@ -21,10 +21,12 @@
             </router-link>
           </li>
           <li class="nav-item">
-            <router-link class="nav-link" to="/about"> PlayLists </router-link>
+            <router-link class="nav-link" to="/playlists">
+              PlayLists
+            </router-link>
           </li>
           <li class="nav-item">
-            <router-link class="nav-link" to="/about"> Tracks </router-link>
+            <router-link class="nav-link" to=""> Tracks </router-link>
           </li>
           <li class="nav-item dropdown">
             <a
@@ -63,12 +65,10 @@
 
         <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
           <li class="nav-item">
-            <router-link class="nav-link" to="/about">
-              Edit Profile
-            </router-link>
+            <router-link class="nav-link" to=""> Edit Profile </router-link>
           </li>
           <li class="nav-item">
-            <router-link class="nav-link" to="/about"> LogOut </router-link>
+            <router-link class="nav-link" to=""> LogOut </router-link>
           </li>
         </ul>
       </div>
@@ -81,3 +81,14 @@ import { defineComponent } from "vue";
 
 export default defineComponent({});
 </script>
+
+<style scoped>
+.navbar {
+  background: rgb(0, 0, 0);
+  background: linear-gradient(
+    135deg,
+    rgba(0, 0, 0, 1) 0%,
+    rgba(228, 65, 173, 1) 100%
+  );
+}
+</style>

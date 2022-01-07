@@ -78,13 +78,17 @@
         <div class="modal-footer">
           <button
             type="button"
-            class="btn btn-secondary"
+            class="block-button btn welcome"
             data-bs-dismiss="modal"
             ref="closeButton"
           >
             <span> Cancel </span>
           </button>
-          <button type="button" @click="actionGenre()" class="btn btn-primary">
+          <button
+            type="button"
+            @click="actionGenre()"
+            class="block-button btn welcome__progress"
+          >
             <span v-if="currentAction == 'Delete'"> Yes </span>
             <span v-else> {{ currentAction }} </span>
           </button>

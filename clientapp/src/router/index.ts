@@ -8,11 +8,6 @@ const routes: Array<RouteRecordRaw> = [
     component: Home,
   },
   {
-    path: "/about",
-    name: "About",
-    component: () => import("../views/About.vue"),
-  },
-  {
     path: "/genres",
     name: "Genres",
     component: () => import("../views/Genres.vue"),
@@ -21,6 +16,11 @@ const routes: Array<RouteRecordRaw> = [
     path: "/authors",
     name: "Authors",
     component: () => import("../views/Authors.vue"),
+  },
+  {
+    path: "/playlists",
+    name: "PlayLists",
+    component: () => import("../views/PlayLists.vue"),
   },
 ];
 
