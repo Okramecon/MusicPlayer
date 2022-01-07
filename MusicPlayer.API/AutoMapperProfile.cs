@@ -19,6 +19,10 @@ namespace MusicPlayer.API
 
             CreateMap<AuthorModel, Author>().ReverseMap();
             CreateMap<AddAuthorModel, Author>();
+
+            CreateMap<AddPlaylistModel, Playlist>();
+            CreateMap<Playlist, GetPlaylistModel>();
+            CreateMap<EditPlaylistModel, Playlist>();
         }
     }
 }

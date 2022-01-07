@@ -17,4 +17,26 @@ namespace MusicPlayer.Models.Models
 
         public List<TrackModel> Tracks { get; set; }
     }
+
+    public class AddPlaylistModel
+    {
+        public string Name { get; set; }
+
+        public string Summary { get; set; }
+
+        /// <summary>
+        /// Обложка
+        /// </summary>
+        public string CoverUrl { get; set; }
+    }
+
+    public class GetPlaylistModel : PlaylistModel
+    {
+
+    }
+
+    public class EditPlaylistModel : PlaylistModel
+    {
+
+    }
 }

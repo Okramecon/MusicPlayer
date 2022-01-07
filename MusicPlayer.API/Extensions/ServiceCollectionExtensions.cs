@@ -45,6 +45,7 @@ namespace MusicPlayer.API.Extensions
             services.AddTransient<AccountService>();
             services.AddTransient<GenreService>();
             services.AddTransient<AuthorService>();
+            services.AddTransient<PlaylistService>();
         }
     }
 }
