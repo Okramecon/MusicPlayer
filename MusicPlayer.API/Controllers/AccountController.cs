@@ -16,7 +16,7 @@ namespace MusicPlayer.API.Controllers
             _service = service;
         }
 
-        [HttpGet("/accounts/")]
+        [HttpGet("")]
         public async Task<List<AccountResponse>> GetAllAccounts()
         {
             return await _service.GetAllAccounts();

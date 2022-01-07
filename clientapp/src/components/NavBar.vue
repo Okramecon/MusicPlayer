@@ -39,10 +39,12 @@
             </a>
             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
               <li>
-                <a class="dropdown-item" href="#">Жанры</a>
+                <router-link to="/genres" class="dropdown-item" href="#">
+                  Genres
+                </router-link>
               </li>
               <li>
-                <a class="dropdown-item" href="#">Авторы</a>
+                <a class="dropdown-item" href="#">Authors</a>
               </li>
             </ul>
           </li>

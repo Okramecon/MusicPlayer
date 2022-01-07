@@ -24,14 +24,13 @@
 </template>
 
 <script lang="ts">
-import { getAllAccounts } from "@/api";
+import { GetAllAccounts } from "@/api";
 import { AccountResponse } from "@/models/response/AccountResponse";
 import { defineComponent, ref } from "vue";
 
 export default defineComponent({
   async setup() {
-    const accounts = ref<AccountResponse[]>([]);
-    accounts.value = await getAllAccounts();
+    const accounts = ref<AccountResponse[]>(await GetAllAccounts());
 
     return {
       accounts,
