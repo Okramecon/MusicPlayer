@@ -17,6 +17,7 @@ namespace MusicPlayer.DAL
         public DbSet<Author> Authors { get; set; }
         public DbSet<Playlist> Playlists { get; set; }
         public DbSet<Album> Albums { get; set; }
+        public DbSet<Genre> Genres { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

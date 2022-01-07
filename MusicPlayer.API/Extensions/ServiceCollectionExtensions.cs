@@ -43,6 +43,7 @@ namespace MusicPlayer.API.Extensions
         public static void RegisterServices(this IServiceCollection services)
         {
             services.AddTransient<AccountService>();
+            services.AddTransient<GenreService>();
         }
     }
 }
