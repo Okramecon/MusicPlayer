@@ -1,0 +1,12 @@
+.cuted-cell {
+    overflow: hidden;
+    display: -webkit-inline-box;
+    display: -moz-inline-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    -moz-line-clamp: 1;
+    -moz-box-orient: vertical;
+    word-break: break-all;
+    padding-top: 4px;
+    max-width: 200px;
+}

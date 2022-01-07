@@ -8,10 +8,10 @@ namespace MusicPlayer.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class AccountController : ControllerBase
+    public class AccountsController : ControllerBase
     {
         private readonly AccountService _service;
-        public AccountController(AccountService service)
+        public AccountsController(AccountService service)
         {
             _service = service;
         }

@@ -44,7 +44,9 @@
                 </router-link>
               </li>
               <li>
-                <a class="dropdown-item" href="#">Authors</a>
+                <router-link to="/authors" class="dropdown-item" href="#"
+                  >Authors</router-link
+                >
               </li>
             </ul>
           </li>

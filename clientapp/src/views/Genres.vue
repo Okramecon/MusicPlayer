@@ -1,6 +1,6 @@
 <template>
   <div class="about">
-    <h1>Users</h1>
+    <h1>Genres</h1>
   </div>
   <hr />
   <table class="table">
@@ -82,16 +82,11 @@
             data-bs-dismiss="modal"
             ref="closeButton"
           >
-            <span v-if="currentAction == 'Delete'"> No </span>
-            <span v-else>
-              {{ currentAction }}
-            </span>
+            <span> Cancel </span>
           </button>
           <button type="button" @click="actionGenre()" class="btn btn-primary">
             <span v-if="currentAction == 'Delete'"> Yes </span>
-            <span v-else>
-              {{ currentAction }}
-            </span>
+            <span v-else> {{ currentAction }} </span>
           </button>
         </div>
       </div>
