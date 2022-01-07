@@ -57,6 +57,5 @@ namespace MusicPlayer.BLL.Services
         {
             return await _context.Genres.FirstOrDefaultAsync(g => g.Id == id);
         }
-
     }
 }
