@@ -2,7 +2,7 @@
 
 namespace MusicPlayer.Models.Models
 {
-    public class Playlist
+    public class PlaylistModel
     {
         public int Id { get; set; }
 
@@ -15,6 +15,6 @@ namespace MusicPlayer.Models.Models
         /// </summary>
         public string CoverUrl { get; set; }
 
-        public List<Track> Tracks { get; set; }
+        public List<TrackModel> Tracks { get; set; }
     }
 }

@@ -17,23 +17,15 @@ namespace MusicPlayer.API.Controllers
     public class AccountController : ControllerBase
     {
         private readonly AccountService _service;
-        public AccountController(AppDbContext context)
+        public AccountController(AccountService service)
         {
-            _service = new AccountService(context);
+            _service = service;
         }
 
         [HttpGet("/accounts/")]
         public async Task<List<AccountResponse>> GetAllAccounts()
         {
-            var accounts = await _service.getAllAccounts();
-
-            var config = new MapperConfiguration(cfg =>
-                cfg.CreateMap<Account, AccountResponse>()
-                .ForMember("RoleName", opt => opt.MapFrom(c => c.Role.Name)));
-
-            var response = new Mapper(config).Map<List<AccountResponse>>(accounts);
-
-            return response;
+            return await _service.GetAllAccounts();
         }
     }
 }

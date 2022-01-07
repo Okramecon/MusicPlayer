@@ -6,10 +6,12 @@ using MusicPlayer.Authtificate;
 using MusicPlayer.DAL;
 using MusicPlayer.DAL.Entities;
 using MusicPlayer.Logics;
+using MusicPlayer.Models.ResponseModels;
 using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
+using System.Threading.Tasks;
 
 namespace MusicPlayer.API.Controllers
 {
@@ -18,7 +20,7 @@ namespace MusicPlayer.API.Controllers
     public class AuthController : ControllerBase
     {
         private readonly IOptions<AuthOptions> _authOptions;
-        private AuthService _service;
+        private readonly AuthService _service;
         public AuthController(IOptions<AuthOptions> authOptions, AppDbContext context)
         {
             _authOptions = authOptions;
@@ -26,22 +28,21 @@ namespace MusicPlayer.API.Controllers
         }
 
         [HttpPost("/login/")]
-        public IActionResult Login([FromBody] LoginRequest req)
-        {
-            var existAccount = _service.AuthenticateAccount(req.UserName, req.Password);
+        //public async Task<AccountResponse> Login([FromBody] LoginRequest req)
+        //{
+        //    var existAccount = _service.AuthenticateAccount(req.UserName, req.Password);
 
-            if (existAccount != null)
-            {
-                var token = GenerateJWT(existAccount);
+        //    if (existAccount != null)
+        //    {
+        //        var token = GenerateJWT(existAccount);
 
-                return Ok(new
-                {
-                    token
-                });
-            }
-
-            return BadRequest("User not found");
-        }
+        //        return new AccountResponse()
+        //        {
+        //            AccessToken = token,
+                    
+        //        };
+        //    }
+        //}
 
         private string GenerateJWT(Account account)
         {

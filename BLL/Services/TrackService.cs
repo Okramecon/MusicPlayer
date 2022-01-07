@@ -1,4 +1,5 @@
-﻿using MusicPlayer.DAL;
+﻿using AutoMapper;
+using MusicPlayer.DAL;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,11 +9,9 @@ namespace MusicPlayer.API.Services
 {
     public class TrackService : BaseContextService
     {
-        public TrackService(AppDbContext context) : base(context)
+        public TrackService(AppDbContext context, IMapper mapper) : base(context, mapper)
         {
 
         }
-
-
     }
 }

@@ -1,23 +1,20 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using MusicPlayer.DAL;
-using MusicPlayer.DAL.Entities;
+using MusicPlayer.Models.ResponseModels;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace MusicPlayer.API.Services
 {
-    public class AccountService
+    public class AccountService : BaseContextService
     {
-        private readonly AppDbContext _context;
+        public AccountService(AppDbContext context, IMapper mapper) : base(context, mapper) { }
 
-        public AccountService(AppDbContext context)
+        public async Task<List<AccountResponse>> GetAllAccounts()
         {
-            _context = context;
-        }
-
-        public async Task<List<Account>> getAllAccounts()
-        {
-            return await _context.Accounts.Include(x => x.Role).ToListAsync();
+            var accounts = await _context.Accounts.Include(x => x.Role).ToListAsync();
+            return _mapper.Map<List<AccountResponse>>(accounts);
         }
     }
 }

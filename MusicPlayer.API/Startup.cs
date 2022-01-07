@@ -23,6 +23,9 @@ namespace MusicPlayer.API
             services.AddControllers();
 
             services.RegisterJwtAuthorization(_configuration);
+
+            services.RegisterServices();
+            services.RegisterAutoMapper();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

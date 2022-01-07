@@ -8,7 +8,7 @@ namespace MusicPlayer.Logics
 {
     public class AuthService
     {
-        private AppDbContext _context;
+        private readonly AppDbContext _context;
 
         public AuthService(AppDbContext context)
         {

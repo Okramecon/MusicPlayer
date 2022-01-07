@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MusicPlayer.Models.Models
 {
-    public class Track
+    public class TrackModel
     {
         public int Id { get; set; }
         public string Name { get; set; }
@@ -17,6 +17,6 @@ namespace MusicPlayer.Models.Models
         public string MusicUrl { get; set; }
 
         // Refrence to author
-        public Author Author { get; set; }
+        public AuthorModel Author { get; set; }
     }
 }

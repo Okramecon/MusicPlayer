@@ -1,6 +1,8 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using MusicPlayer.API.Services;
 using MusicPlayer.Authtificate;
 using MusicPlayer.DAL;
 
@@ -31,6 +33,16 @@ namespace MusicPlayer.API.Extensions
         {
             services.AddDbContext<AppDbContext>(options =>
                 options.UseSqlServer(configuration.GetConnectionString("DefaultConnection")));
+        }
+
+        public static void RegisterAutoMapper(this IServiceCollection services)
+        {
+            services.AddSingleton(x => new MapperConfiguration(cfg => cfg.AddProfile(new AutoMapperProfile())).CreateMapper());
+        }
+
+        public static void RegisterServices(this IServiceCollection services)
+        {
+            services.AddTransient<AccountService>();
         }
     }
 }

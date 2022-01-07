@@ -1,7 +1,7 @@
 <template>
   <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
     <div class="container-fluid container">
-      <router-link class="navbar-brand" to="/"> Navbar </router-link>
+      <router-link class="navbar-brand" to="/"> Music Player </router-link>
       <button
         class="navbar-toggler"
         type="button"
@@ -16,12 +16,15 @@
       <div id="navbarSupportedContent" class="collapse navbar-collapse">
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
           <li class="nav-item">
-            <router-link class="nav-link active" aria-current="page" to="/">
-              Home
+            <router-link class="nav-link" aria-current="page" to="/">
+              Users
             </router-link>
           </li>
           <li class="nav-item">
-            <router-link class="nav-link" to="/about"> About </router-link>
+            <router-link class="nav-link" to="/about"> PlayLists </router-link>
+          </li>
+          <li class="nav-item">
+            <router-link class="nav-link" to="/about"> Tracks </router-link>
           </li>
           <li class="nav-item dropdown">
             <a
@@ -32,32 +35,19 @@
               data-bs-toggle="dropdown"
               aria-expanded="false"
             >
-              Dropdown
+              Dictionary
             </a>
             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
               <li>
-                <a class="dropdown-item" href="#">Action</a>
+                <a class="dropdown-item" href="#">Жанры</a>
               </li>
               <li>
-                <a class="dropdown-item" href="#">Another action</a>
-              </li>
-              <li><hr class="dropdown-divider" /></li>
-              <li>
-                <a class="dropdown-item" href="#">Something else here</a>
+                <a class="dropdown-item" href="#">Авторы</a>
               </li>
             </ul>
           </li>
-          <li class="nav-item">
-            <a
-              class="nav-link disabled"
-              href="#"
-              tabindex="-1"
-              aria-disabled="true"
-              >Disabled</a
-            >
-          </li>
         </ul>
-        <form class="d-flex">
+        <!-- <form class="d-flex">
           <input
             class="form-control me-2"
             type="search"
@@ -65,7 +55,18 @@
             aria-label="Search"
           />
           <button class="btn btn-outline-success" type="submit">Search</button>
-        </form>
+        </form> -->
+
+        <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+            <router-link class="nav-link" to="/about">
+              Edit Profile
+            </router-link>
+          </li>
+          <li class="nav-item">
+            <router-link class="nav-link" to="/about"> LogOut </router-link>
+          </li>
+        </ul>
       </div>
     </div>
   </nav>
