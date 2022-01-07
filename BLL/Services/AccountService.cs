@@ -5,7 +5,7 @@ using MusicPlayer.Models.ResponseModels;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace MusicPlayer.API.Services
+namespace MusicPlayer.BLL.Services
 {
     public class AccountService : BaseContextService
     {

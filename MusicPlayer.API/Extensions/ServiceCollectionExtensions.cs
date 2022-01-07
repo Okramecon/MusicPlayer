@@ -2,8 +2,8 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using MusicPlayer.API.Services;
 using MusicPlayer.Authtificate;
+using MusicPlayer.BLL.Services;
 using MusicPlayer.DAL;
 
 namespace MusicPlayer.API.Extensions

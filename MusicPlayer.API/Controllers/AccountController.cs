@@ -1,13 +1,7 @@
-﻿using AutoMapper;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using MusicPlayer.API.Services;
-using MusicPlayer.DAL;
-using MusicPlayer.Models;
+﻿using Microsoft.AspNetCore.Mvc;
+using MusicPlayer.BLL.Services;
 using MusicPlayer.Models.ResponseModels;
-using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace MusicPlayer.API.Controllers

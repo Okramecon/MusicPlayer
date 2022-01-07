@@ -22,4 +22,8 @@
     <ProjectReference Include="..\MusicPlayer.Authenticate\MusicPlayer.Authenticate.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="StaticFiles\Music\" />
+  </ItemGroup>
+
 </Project>

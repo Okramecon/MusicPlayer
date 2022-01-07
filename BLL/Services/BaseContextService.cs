@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using MusicPlayer.DAL;
 
-namespace MusicPlayer.API.Services
+namespace MusicPlayer.BLL.Services
 {
     public class BaseContextService
     {

@@ -26,10 +26,14 @@ namespace MusicPlayer.API
 
             services.RegisterServices();
             services.RegisterAutoMapper();
+
+
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            app.UseStaticFiles();
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
