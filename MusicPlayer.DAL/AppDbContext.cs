@@ -23,6 +23,18 @@ namespace MusicPlayer.DAL
         {
             base.OnModelCreating(builder);
 
+            builder.Entity<PlaylistTrack>()
+                .HasOne(x => x.Track)
+                .WithMany(x => x.Playlists)
+                .HasForeignKey(x => x.TrackId)
+                .IsRequired();
+
+            builder.Entity<PlaylistTrack>()
+                .HasOne(x => x.Playlist)
+                .WithMany(x => x.Tracks)
+                .HasForeignKey(x => x.PlaylistId)
+                .IsRequired();
+
             foreach (var x in builder.Model.GetEntityTypes().SelectMany(e => e.GetForeignKeys()))
             {
                 x.DeleteBehavior = DeleteBehavior.Cascade;

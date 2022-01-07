@@ -13,6 +13,6 @@ namespace MusicPlayer.DAL.Entities
         /// </summary>
         public string CoverUrl { get; set; }
 
-        public List<Track> Tracks { get; set; }
+        public IEnumerable<PlaylistTrack> Tracks { get; set; }
     }
 }

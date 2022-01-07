@@ -1,4 +1,6 @@
-﻿namespace MusicPlayer.DAL.Entities
+﻿using System.Collections.Generic;
+
+namespace MusicPlayer.DAL.Entities
 {
     public class Track : BaseEntity<int>
     {
@@ -11,5 +13,6 @@
 
         // Refrence to author
         public Author Author { get; set; }
+        public IEnumerable<PlaylistTrack> Playlists { get; set; }
     }
 }
