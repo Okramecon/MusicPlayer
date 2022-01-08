@@ -3,6 +3,7 @@ using MusicPlayer.DAL.Entities;
 using MusicPlayer.Models.Models;
 using MusicPlayer.Models.Models.GenreModels;
 using MusicPlayer.Models.ResponseModels;
+using System.Linq;
 
 namespace MusicPlayer.API
 {
@@ -20,8 +21,14 @@ namespace MusicPlayer.API
             CreateMap<AuthorModel, Author>().ReverseMap();
             CreateMap<AddAuthorModel, Author>();
 
+            CreateMap<Track, TrackModel>().ReverseMap();
+            CreateMap<Track, GetTrackModel>();
+            CreateMap<AddTrackModel, Track>();
+            CreateMap<EditTrackModel, Track>();
+
             CreateMap<AddPlaylistModel, Playlist>();
-            CreateMap<Playlist, GetPlaylistModel>();
+            CreateMap<Playlist, GetPlaylistModel>()
+                .ForMember(dest => dest.Tracks, x => x.MapFrom(src => src.Tracks.Select(t => t.Track)));
             CreateMap<EditPlaylistModel, Playlist>();
         }
     }

@@ -16,7 +16,10 @@ namespace MusicPlayer.BLL.Services
 
         public async Task<List<GetPlaylistModel>> ListAsync()
         {
-            var playlists = await _context.Playlists.ToListAsync();
+            var playlists = await _context.Playlists
+                .Include(x => x.Tracks)
+                .ThenInclude(x => x.Track)
+                .ToListAsync();
             return _mapper.Map<List<GetPlaylistModel>>(playlists);
         }
 
@@ -60,7 +63,10 @@ namespace MusicPlayer.BLL.Services
 
         public async Task<Playlist> GetByIdAsync(int id)
         {
-            return await _context.Playlists.FirstOrDefaultAsync(g => g.Id == id);
+            return await _context.Playlists
+                .Include(t => t.Tracks)
+                .ThenInclude(x => x.Track)
+                .FirstOrDefaultAsync(g => g.Id == id);
         }
     }
 }
