@@ -5,15 +5,18 @@
       <router-view />
     </div>
   </suspense>
+  <Player />
 </template>
 
 <script lang="ts">
 import { defineComponent } from "vue";
 import NavBar from "@/components/NavBar.vue";
+import Player from "@/components/Player.vue";
 
 export default defineComponent({
   components: {
     NavBar,
+    Player,
   },
 });
 </script>
