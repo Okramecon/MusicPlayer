@@ -310,8 +310,8 @@ import { Howl, Howler } from "howler";
 export default defineComponent({
   setup() {
     onMounted(() => {
-      const barWidth = (0.9 * 100) / 100;
-      sliderBtnVol.value =
+      var barWidth = (0.9 * 100) / 100;
+      this.sliderBtnVol =
         this.volBar.offsetWidth * barWidth +
         this.volBar.offsetWidth * 0.05 -
         25;

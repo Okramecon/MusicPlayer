@@ -2,6 +2,11 @@
 @tailwind components;
 @tailwind utilities;
 
+@import url('https://fonts.googleapis.com/css2?family=Mali:wght@400;700&display=swap');
+html, body, #app {
+  font-family: 'Mali', cursive;
+}
+
 .cuted-cell {
     overflow: hidden;
     display: -webkit-inline-box;
@@ -49,4 +54,12 @@ background: linear-gradient(135deg, rgba(0,0,0,1) 0%, rgba(250,81,110,1) 52%, rg
     background-size: 100%;
     background-position: center;
     background-attachment: fixed;
+  }
+
+
+  /* vueform */
+  .multiselect-option.is-selected.is-pointed,
+  .multiselect-option.is-selected {
+    background: rgb(0,0,0) !important;
+    background: linear-gradient(135deg, rgba(0,0,0,1) 0%, rgba(250,81,110,1) 52%, rgba(210,49,120,1) 100%) !important;
   }

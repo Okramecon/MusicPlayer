@@ -29,7 +29,7 @@
             </router-link>
           </li>
           <li class="nav-item">
-            <router-link class="nav-link" to=""> Tracks </router-link>
+            <router-link class="nav-link" to="/tracks"> Tracks </router-link>
           </li>
           <li class="nav-item dropdown">
             <a

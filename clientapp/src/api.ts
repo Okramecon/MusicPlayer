@@ -3,6 +3,7 @@ import axios, { AxiosInstance } from "axios";
 import { AccountResponse } from "./models/response/AccountResponse";
 import Author from "./models/Author";
 import Playlist from "./models/PlayList";
+import Track from "./models/Track";
 
 const apiClient: AxiosInstance = axios.create({
   baseURL: "http://localhost:52455/api",
@@ -77,4 +78,26 @@ export async function EditPlaylist(playlist: Playlist): Promise<Playlist> {
 
 export async function DeletePlaylist(id: number): Promise<number> {
   return apiClient.delete("/playlists/" + id).then((res) => res.data);
+}
+
+// Tracks
+// Playlists
+export async function GetAllTracks(): Promise<Track[]> {
+  return apiClient.get("/tracks/").then((res) => res.data);
+}
+
+export async function CreateTrack(track: Track): Promise<Track> {
+  return apiClient
+    .post("/tracks/", JSON.stringify(track))
+    .then((res) => res.data);
+}
+
+export async function EditTrack(track: Track): Promise<Track> {
+  return apiClient
+    .put("/tracks/", JSON.stringify(track))
+    .then((res) => res.data);
+}
+
+export async function DeleteTrack(id: number): Promise<number> {
+  return apiClient.delete("/tracks/" + id).then((res) => res.data);
 }
