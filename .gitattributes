@@ -61,3 +61,7 @@
 #*.PDF   diff=astextplain
 #*.rtf   diff=astextplain
 #*.RTF   diff=astextplain
+###############################################################################
+#Ending line LF for vue and ts files
+#*.vue text eol=lf
+#*.ts text eol=lf
