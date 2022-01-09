@@ -134,5 +134,5 @@ _NCrunch*
 
 .vs/
 MusicPlayer.API/StaticFiles/MusiccurrentIndex
-MusicPlayer.API/StaticFiles/appsettings.Development.json
-MusicPlayer.API/StaticFiles/appsettings.json
+MusicPlayer.API/appsettings.Development.json
+MusicPlayer.API/appsettings.json
