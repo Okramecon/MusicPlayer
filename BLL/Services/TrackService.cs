@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
+using MusicPlayer.BLL.Helpers;
 using MusicPlayer.BLL.Services;
 using MusicPlayer.DAL;
 using MusicPlayer.DAL.Entities;
@@ -32,6 +33,7 @@ namespace MusicPlayer.API.Services
         public async Task<GetTrackModel> AddAsync(AddTrackModel model)
         {
             var track = _mapper.Map<Track>(model);
+            await UploadFileHelper.UploadMusicFileAsync(model.Upload);
             await _context.Tracks.AddAsync(track);
             await _context.SaveChangesAsync();
 

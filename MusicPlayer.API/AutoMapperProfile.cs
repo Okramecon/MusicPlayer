@@ -3,6 +3,7 @@ using MusicPlayer.DAL.Entities;
 using MusicPlayer.Models.Models;
 using MusicPlayer.Models.Models.GenreModels;
 using MusicPlayer.Models.ResponseModels;
+using System.IO;
 using System.Linq;
 
 namespace MusicPlayer.API
@@ -23,7 +24,8 @@ namespace MusicPlayer.API
 
             CreateMap<Track, TrackModel>().ReverseMap();
             CreateMap<Track, GetTrackModel>();
-            CreateMap<AddTrackModel, Track>();
+            CreateMap<AddTrackModel, Track>()
+                .ForMember(dest => dest.MusicUrl, x => x.MapFrom(src => Path.Combine("Music/", src.Upload.FileName)));
             CreateMap<EditTrackModel, Track>();
 
             CreateMap<AddPlaylistModel, Playlist>();

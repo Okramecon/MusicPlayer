@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Http;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -27,7 +28,7 @@ namespace MusicPlayer.Models.Models
         public string Text { get; set; }
         public int AuthorId { get; set; }
         public string CoverUrl { get; set; }
-        public string MusicUrl { get; set; }
+        public IFormFile Upload { get; set; }
 
     }
 
