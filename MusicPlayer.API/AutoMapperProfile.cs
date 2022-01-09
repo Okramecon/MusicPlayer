@@ -24,8 +24,7 @@ namespace MusicPlayer.API
 
             CreateMap<Track, TrackModel>().ReverseMap();
             CreateMap<Track, GetTrackModel>();
-            CreateMap<AddTrackModel, Track>()
-                .ForMember(dest => dest.MusicUrl, x => x.MapFrom(src => Path.Combine("Music/", src.Upload.FileName)));
+            CreateMap<AddTrackModel, Track>();
             CreateMap<EditTrackModel, Track>();
 
             CreateMap<AddPlaylistModel, Playlist>();

@@ -4,6 +4,8 @@ export default class Track {
   summary: string;
   text: string;
   coverUrl: string;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  upload: any;
   musicUrl: string;
   authorId: number;
 
@@ -13,6 +15,7 @@ export default class Track {
     this.summary = "";
     this.text = "";
     this.coverUrl = "";
+    this.upload = {};
     this.musicUrl = "";
     this.authorId = 0;
   }

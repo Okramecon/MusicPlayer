@@ -30,10 +30,11 @@ namespace MusicPlayer.API.Services
             return _mapper.Map<GetTrackModel>(track);
         }
 
-        public async Task<GetTrackModel> AddAsync(AddTrackModel model)
+        public async Task<GetTrackModel> AddAsync(AddTrackModel model, string baseUrl)
         {
             var track = _mapper.Map<Track>(model);
             await UploadFileHelper.UploadMusicFileAsync(model.Upload);
+            track.MusicUrl = baseUrl + "Music/" + model.Upload.FileName; 
             await _context.Tracks.AddAsync(track);
             await _context.SaveChangesAsync();
 

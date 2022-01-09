@@ -4,8 +4,8 @@
       <tr
         v-for="(track, indexo) in tracks"
         :key="indexo"
-        :style="indexo == index ? '' : ''"
-        :class="indexo == index ? '' : ''"
+        :style="indexo == currentIndex ? '' : ''"
+        :class="indexo == currentIndex ? '' : ''"
       >
         <th scope="row">{{ indexo + 1 }}</th>
         <td>cover</td>
@@ -73,147 +73,146 @@
       </tr>
     </tbody>
   </table>
-  <div class="mt-auto">
-    <div class="flex">
-      <div class="flex w-2/5 m-auto justify-between items-center my-4">
-        <div class="text-grey-darker hover:bg-gray-300 rounded-full p-1">
-          <svg
-            @click="random = !random"
-            :class="random ? 'text-red-500' : ''"
-            class="w-8 h-8 cursor-pointer"
-            fill="currentColor"
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 20 20"
-          >
-            <path
-              d="M6.59 12.83L4.4 15c-.58.58-1.59 1-2.4 1H0v-2h2c.29 0 .8-.2 1-.41l2.17-2.18 1.42 1.42zM16 4V1l4 4-4 4V6h-2c-.29 0-.8.2-1 .41l-2.17 2.18L9.4 7.17 11.6 5c.58-.58 1.59-1 2.41-1h2zm0 10v-3l4 4-4 4v-3h-2c-.82 0-1.83-.42-2.41-1l-8.6-8.59C2.8 6.21 2.3 6 2 6H0V4h2c.82 0 1.83.42 2.41 1l8.6 8.59c.2.2.7.41.99.41h2z"
-            />
-          </svg>
-        </div>
-        <div class="text-grey-darker hover:bg-gray-300 rounded-full p-1">
-          <svg
-            @click="prevButton ? previous() : ''"
-            class="w-8 h-8 cursor-pointer"
-            fill="currentColor"
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 20 20"
-          >
-            <path d="M4 5h3v10H4V5zm12 0v10l-9-5 9-5z" />
-          </svg>
-        </div>
-        <div
-          class="text-white p-4 rounded-full bg-gradient-to-r from-red-500 via-red-600 to-red-700 shadow-lg"
-        >
-          <svg
-            v-if="!pauseTrack"
-            @click="play()"
-            class="w-8 h-8 cursor-pointer"
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-              d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"
-            />
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-              d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-            />
-          </svg>
-          <svg
-            v-else
-            @click="pause()"
-            class="w-8 h-8 cursor-pointer"
-            fill="currentColor"
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 20 20"
-          >
-            <path d="M5 4h3v12H5V4zm7 0h3v12h-3V4z" />
-          </svg>
-        </div>
-        <div class="text-grey-darker hover:bg-gray-300 rounded-full p-1">
-          <svg
-            @click="nextButton ? next() : ''"
-            class="w-8 h-8 cursor-pointer"
-            fill="currentColor"
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 20 20"
-          >
-            <path d="M13 5h3v10h-3V5zM4 5l9 5-9 5V5z" />
-          </svg>
-        </div>
-        <div class="text-grey-darker hover:bg-gray-300 rounded-full p-1">
-          <svg
-            @click="repeat = !repeat"
-            :class="repeat ? 'text-red-500' : ''"
-            class="w-8 h-8 cursor-pointer"
-            fill="currentColor"
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 20 20"
-          >
-            <path
-              d="M5 4a2 2 0 0 0-2 2v6H0l4 4 4-4H5V6h7l2-2H5zm10 4h-3l4-4 4 4h-3v6a2 2 0 0 1-2 2H6l2-2h7V8z"
-            />
-          </svg>
-        </div>
-      </div>
-    </div>
-    <div class="flex w-11/12 h-16 items-center justify-around m-auto">
+  <div class="mt-auto" style="margin-inline: -8vw">
+    <div class="controls">
       <div
-        class="w-2/12 md:flex items-center hidden"
-        v-for="(audio, indexo) in audios.slice(index, index + 1)"
+        class="d-grid"
+        style="grid-template-columns: 1fr 1fr"
+        v-for="(audio, indexo) in audios.slice(currentIndex, currentIndex + 1)"
         :key="indexo"
       >
         <img
-          class="w-10 h-10 rounded-full"
+          class="w-14 h-14 rounded-full m-auto"
           src="https://tailwindcss.com/img/card-top.jpg"
         />
-        <div class="flex flex-col ml-2 font-semibold">
+        <div class="font-semibold m-auto">
           <p>{{ audio.name }}</p>
           <p class="text-xs text-gray-600">{{ audio.artist }}</p>
         </div>
       </div>
-      <div class="w-4/5 flex md:w-8/12 items-center">
-        <div class="text-sm text-grey-darker w-2/12 md:w-1/12 font-semibold">
-          <p>{{ timer }}</p>
-        </div>
-        <div class="mt-1 relative w-8/12 md:w-10/12">
-          <div
-            @click="seek($event)"
-            ref="progress"
-            class="h-1 bg-grey-dark cursor-pointer rounded-full bg-gray-500"
-          >
+      <div class="d-block">
+        <div class="flex">
+          <div class="flex w-50 m-auto justify-between items-center my-2">
+            <div class="text-grey-darker hover:bg-gray-300 rounded-full p-1">
+              <svg
+                @click="controlsButtons.random = !controlsButtons.random"
+                :class="controlsButtons.random ? 'text-red-500' : ''"
+                class="w-6 h-6 cursor-pointer"
+                fill="currentColor"
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 20 20"
+              >
+                <path
+                  d="M6.59 12.83L4.4 15c-.58.58-1.59 1-2.4 1H0v-2h2c.29 0 .8-.2 1-.41l2.17-2.18 1.42 1.42zM16 4V1l4 4-4 4V6h-2c-.29 0-.8.2-1 .41l-2.17 2.18L9.4 7.17 11.6 5c.58-.58 1.59-1 2.41-1h2zm0 10v-3l4 4-4 4v-3h-2c-.82 0-1.83-.42-2.41-1l-8.6-8.59C2.8 6.21 2.3 6 2 6H0V4h2c.82 0 1.83.42 2.41 1l8.6 8.59c.2.2.7.41.99.41h2z"
+                />
+              </svg>
+            </div>
+            <div class="text-grey-darker hover:bg-gray-300 rounded-full p-1">
+              <svg
+                @click="controlsButtons.prevButton ? previous() : ''"
+                class="w-6 h-6 cursor-pointer"
+                fill="currentColor"
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 20 20"
+              >
+                <path d="M4 5h3v10H4V5zm12 0v10l-9-5 9-5z" />
+              </svg>
+            </div>
             <div
-              class="flex w-full justify-end h-1 bg-gradient-to-r from-red-500 to-red-700 rounded-full relative"
-              :style="{ width: step + '%' }"
-            ></div>
-          </div>
-          <div
-            class="flex w-full justify-end h-1 rounded-full relative"
-            :style="{ width: step + '%' }"
-          >
-            <span
-              id="progressButtonTimer"
-              class="w-3 h-3 md:w-4 md:h-4 bg-gradient-to-r from-red-500 to-red-700 absolute pin-r pin-b -mb-1 rounded-full shadow"
-            ></span>
+              class="text-white p-3 rounded-full bg-gradient-to-r from-red-500 via-red-600 to-red-700 shadow-lg"
+            >
+              <svg
+                v-if="!pauseTrack"
+                @click="play()"
+                class="w-8 h-8 cursor-pointer"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"
+                />
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                />
+              </svg>
+              <svg
+                v-else
+                @click="pause()"
+                class="w-8 h-8 cursor-pointer"
+                fill="currentColor"
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 20 20"
+              >
+                <path d="M5 4h3v12H5V4zm7 0h3v12h-3V4z" />
+              </svg>
+            </div>
+            <div class="text-grey-darker hover:bg-gray-300 rounded-full p-1">
+              <svg
+                @click="controlsButtons.nextButton ? next() : ''"
+                class="w-6 h-6 cursor-pointer"
+                fill="currentColor"
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 20 20"
+              >
+                <path d="M13 5h3v10h-3V5zM4 5l9 5-9 5V5z" />
+              </svg>
+            </div>
+            <div class="text-grey-darker hover:bg-gray-300 rounded-full p-1">
+              <svg
+                @click="controlsButtons.repeat = !controlsButtons.repeat"
+                :class="controlsButtons.repeat ? 'text-red-500' : ''"
+                class="w-6 h-6 cursor-pointer"
+                fill="currentColor"
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 20 20"
+              >
+                <path
+                  d="M5 4a2 2 0 0 0-2 2v6H0l4 4 4-4H5V6h7l2-2H5zm10 4h-3l4-4 4 4h-3v6a2 2 0 0 1-2 2H6l2-2h7V8z"
+                />
+              </svg>
+            </div>
           </div>
         </div>
-        <div class="text-sm text-grey-darker w-2/12 md:w-1/12 font-semibold">
-          <p>{{ duration }}</p>
+        <div class="d-flex w-75 m-auto">
+          <div class="text-sm text-grey-darker w-2/12 md:w-1/12 font-semibold">
+            <p>{{ timer }}</p>
+          </div>
+          <div class="mt-2 relative w-8/12 md:w-10/12">
+            <div
+              @click="seek($event)"
+              ref="progress"
+              class="h-1 bg-grey-dark cursor-pointer rounded-full bg-gray-500"
+            >
+              <div
+                class="flex w-full justify-end h-1 bg-gradient-to-r from-red-500 to-red-700 rounded-full relative"
+                :style="{ width: step + '%' }"
+              ></div>
+            </div>
+            <div
+              class="flex w-full justify-end h-1 rounded-full relative"
+              :style="{ width: step + '%' }"
+            >
+              <span
+                id="progressButtonTimer"
+                class="w-3 h-3 md:w-4 md:h-4 bg-gradient-to-r from-red-500 to-red-700 absolute pin-r pin-b -mb-1 rounded-full shadow"
+              ></span>
+            </div>
+          </div>
+          <div class="text-sm text-grey-darker w-2/12 md:w-1/12 font-semibold">
+            <p>{{ duration }}</p>
+          </div>
         </div>
       </div>
-
-      <div class="w-1/5 flex md:w-2/12 m-auto items-center">
-        <div
-          class="w-3/12 md:w-2/12 hover:bg-gray-500 rounded-full md:p-1"
-          @click="mute()"
-        >
+      <div class="d-grid" style="grid-template-columns: 0.3fr 0.7fr">
+        <div class="hover:bg-gray-500 rounded-full m-auto" @click="mute()">
           <svg
             v-if="mutePlayer"
             class="w-6 h-6 m-auto text-red-500 cursor-pointer"
@@ -252,7 +251,7 @@
             />
           </svg>
         </div>
-        <div class="w-9/12 md:w-10/12 m-auto relative">
+        <div class="w-75 m-auto relative">
           <div
             @click="volume($event)"
             ref="volBar"
@@ -279,31 +278,27 @@
   </div>
 </template>
 
-<script>
+<script lang="js">
 import { ref, reactive, defineComponent } from "vue";
 import { Howl, Howler } from "howler";
 import { GetAllTracks } from "@/api";
 export default defineComponent({
   mounted() {
-    var barWidth = (0.9 * 100) / 100;
+    var barWidth = 0.9;
     this.sliderBtnVol =
       this.volBar.offsetWidth * barWidth + this.volBar.offsetWidth * 0.05 - 25;
   },
   async setup() {
-    const audios = ref([
-      {
-        name: "Silver Spirit",
-        file: "https://cdn9.sefon.pro/prev/t0-x91Hn8znhdlBMrTbeuw/1641780223/193/%D0%90%D1%81%D0%B8%D1%8F%20%26%20N%D0%AE%20-%20%D0%A2%D0%B2%D0%BE%D0%B9%20%D0%9F%D0%BE%D1%86%D0%B5%D0%BB%D1%83%D0%B9%20%28192kbps%29.mp3",
-        artist: "Shamika Cox",
-        howl: null,
-      },
-    ]);
+    const audios = ref([]);
     const step = ref(0);
-    const nextButton = ref(true);
-    const prevButton = ref(true);
-    const random = ref(false);
-    const repeat = ref(false);
-    const index = ref(0);
+    const controlsButtons = reactive({
+      prevButton: true,
+      nextButton: true,
+      random: false,
+      repeat: false
+    })
+
+    const currentIndex = ref(0);
     const duration = ref("00:00");
     const timer = ref("00:00");
     const pauseTrack = ref(false);
@@ -317,9 +312,21 @@ export default defineComponent({
     const state = reactive({
       audioPlaying: [],
     });
-    function formatTime(secs) {
-      var minutes = Math.floor(secs / 60) || 0;
-      var seconds = Math.floor(secs - minutes * 60) || 0;
+
+    tracks.value.forEach((x) => {
+      audios.value.push({
+        name: x.name,
+        file: x.musicUrl,
+        artist: x.text,
+        howl: null
+      });
+    });
+
+
+    // Functions
+    const formatTime = (secs) => {
+      const minutes = Math.floor(secs / 60) || 0;
+      const seconds = Math.floor(secs - minutes * 60) || 0;
       return (
         (minutes < 10 ? "0" : "") +
         minutes +
@@ -328,23 +335,24 @@ export default defineComponent({
         seconds
       );
     }
+
     function play() {
       var sound;
 
-      var audio = audios.value[index.value];
+      var audio = audios.value[currentIndex.value];
       console.log(audio);
       if (audio.howl) {
         sound = audio.howl;
       } else {
-        state.audioPlaying[index.value] = false;
+        state.audioPlaying[currentIndex.value] = false;
         sound = audio.howl = new Howl({
           src: [audio.file],
           html5: true, // A live stream can only be played through HTML5 Audio.
           format: ["mp3", "aac"],
           onplay: function () {
             pauseTrack.value = true;
-            nextButton.value = true;
-            prevButton.value = true;
+            controlsButtons.nextButton.value = true;
+            controlsButtons.prevButton.value = true;
             duration.value = formatTime(sound.duration());
             requestAnimationFrame(stepFunction.bind(this));
           },
@@ -361,18 +369,18 @@ export default defineComponent({
       }
 
       sound.play();
-      state.audioPlaying[index.value] = true;
+      state.audioPlaying[currentIndex.value] = true;
     }
     function pause() {
-      var audio = audios.value[index.value].howl;
+      var audio = audios.value[currentIndex.value].howl;
       if (audio) {
         audio.pause();
         pauseTrack.value = false;
-        state.audioPlaying[index.value] = false;
+        state.audioPlaying[currentIndex.value] = false;
       }
     }
     function stepFunction() {
-      var sound = audios.value[index.value].howl;
+      var sound = audios.value[currentIndex.value].howl;
       var seek = sound.seek();
       timer.value = formatTime(Math.round(seek));
       step.value = (seek * 100) / sound.duration();
@@ -389,7 +397,7 @@ export default defineComponent({
     function seek(event) {
       var per = event.offsetX / progress.value.clientWidth;
 
-      var sound = audios.value[index.value].howl;
+      var sound = audios.value[currentIndex.value].howl;
 
       if (sound) {
         let barWidth = 0;
@@ -413,71 +421,71 @@ export default defineComponent({
       }
     }
     function next() {
-      nextButton.value = false;
-      var audio = audios.value[index.value].howl;
+      controlsButtons.nextButton.value = false;
+      var audio = audios.value[currentIndex.value].howl;
 
-      state.audioPlaying[index.value] = false;
+      state.audioPlaying[currentIndex.value] = false;
       mutePlayer.value ? (mutePlayer.value = false) : "";
       audio && audio.mute(true) ? audio.mute(false) : "";
 
-      if (audio && audios.value.length - 1 == index.value) {
+      if (audio && audios.value.length - 1 == currentIndex.value) {
         audio.stop();
-        repeat.value
-          ? index.value
-          : random.value
-          ? (index.value = Math.floor(Math.random() * audios.value.length))
-          : (index.value = 0);
+        controlsButtons.repeat.value
+          ? currentIndex.value
+          : controlsButtons.random.value
+          ? (currentIndex.value = Math.floor(Math.random() * audios.value.length))
+          : (currentIndex.value = 0);
       } else {
         if (audio) {
           audio.stop();
         }
-        repeat.value
-          ? index.value
-          : random.value
-          ? (index.value = Math.floor(Math.random() * audios.value.length))
-          : index.value++;
+        controlsButtons.repeat.value
+          ? currentIndex.value
+          : controlsButtons.random.value
+          ? (currentIndex.value = Math.floor(Math.random() * audios.value.length))
+          : currentIndex.value++;
       }
 
       play();
     }
     function previous() {
-      var audio = audios.value[index.value].howl;
-      prevButton.value = false;
-      state.audioPlaying[index.value] = false;
+      var audio = audios.value[currentIndex.value].howl;
+      controlsButtons.prevButton.value = false;
+      state.audioPlaying[currentIndex.value] = false;
       mutePlayer.value ? (mutePlayer.value = false) : "";
       audio && audio.mute(true) ? audio.mute(false) : "";
       if (!audio) {
-        index.value = audios.value.length - 1;
-      } else if (audio && index.value == 0) {
+        currentIndex.value = audios.value.length - 1;
+      } else if (audio && currentIndex.value == 0) {
         audio.stop();
-        repeat.value
-          ? index.value
-          : random.value
-          ? (index.value = Math.floor(Math.random() * audios.value.length))
-          : (index.value = audios.value.length - 1);
+        controlsButtons.repeat.value
+          ? currentIndex.value
+          : controlsButtons.random.value
+          ? (currentIndex.value = Math.floor(Math.random() * audios.value.length))
+          : (currentIndex.value = audios.value.length - 1);
       } else if (audio) {
         audio.stop();
 
-        repeat.value
-          ? index.value
-          : random.value
-          ? (index.value = Math.floor(Math.random() * audios.value.length))
-          : index.value--;
+        controlsButtons.repeat.value
+          ? currentIndex.value
+          : controlsButtons.random.value
+          ? (currentIndex.value = Math.floor(Math.random() * audios.value.length))
+          : currentIndex.value--;
       }
 
       play();
     }
     function selectSound(indexSelected) {
-      if (indexSelected != index.value || index.value == 0) {
+      if (indexSelected != currentIndex.value || currentIndex.value == 0) {
         console.log(indexSelected);
-        console.log(index.value);
-        var audio = audios.value[index.value].howl;
+        console.log(currentIndex.value);
+        var audio = audios.value[currentIndex.value].howl;
 
         if (audio) {
           audio.stop();
-          state.audioPlaying[index.value] = false;
+          state.audioPlaying[currentIndex.value] = false;
         }
-        index.value = indexSelected;
+        currentIndex.value = indexSelected;
 
         play();
       }
@@ -493,7 +501,7 @@ export default defineComponent({
       Howler.volume(per);
     }
     function mute() {
-      var audio = audios.value[index.value].howl;
+      var audio = audios.value[currentIndex.value].howl;
 
       if (audio) {
         mutePlayer.value = !mutePlayer.value;
@@ -511,15 +519,14 @@ export default defineComponent({
       pauseTrack,
       next,
       previous,
-      index,
+      currentIndex,
       timer,
       step,
       stepFunction,
       seek,
       selectSound,
       state,
-      random,
-      repeat,
+      controlsButtons,
       progress,
       volume,
       volBar,
@@ -528,8 +535,6 @@ export default defineComponent({
       mute,
       mutePlayer,
       sliderBtnVol,
-      nextButton,
-      prevButton,
       tracks,
     };
   },
@@ -537,6 +542,20 @@ export default defineComponent({
 </script>
 
 <style scoped>
+.controls {
+  background: rgb(131, 58, 180);
+  background: linear-gradient(
+    90deg,
+    rgba(131, 58, 180, 1) 0%,
+    rgba(253, 29, 29, 1) 50%,
+    rgba(252, 176, 69, 1) 100%
+  );
+  box-shadow: 0px 0px 7px 10px rgba(59, 87, 195, 0.39);
+  margin-inline: 40px;
+  border-radius: 50px;
+  display: grid;
+  grid-template-columns: 0.3fr 1.4fr 0.3fr;
+}
 #journal-scroll::-webkit-scrollbar {
   width: 4px;
   cursor: pointer;

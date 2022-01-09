@@ -75,6 +75,17 @@
               label="name"
               :options="options"
             />
+
+            <label for="file" class="form-label">Track file</label>
+            <input
+              class="form-control"
+              aria-describedby="genreHelp"
+              type="file"
+              id="file"
+              name="file"
+              @change="previewFiles"
+            />
+
             <label for="genreInput" class="form-label">Cover</label>
             <input
               v-model="currentTrackrForm.coverUrl"
@@ -130,13 +141,14 @@ export default defineComponent({
   },
   async setup() {
     const closeButton = ref();
+    const upload = new FormData();
     const currentTrackrForm = reactive<Track>({
       id: 0,
       name: "",
       summary: "",
       text: "",
       coverUrl: "",
-      musicUrl: "",
+      upload: new Blob(),
       authorId: 0,
     });
     const currentAction = ref("Create");
@@ -152,12 +164,21 @@ export default defineComponent({
       });
     });
 
+    const previewFiles = async (event: any) => {
+      const file = event.target.files[0];
+      upload.append("name", currentTrackrForm.name);
+      upload.append("file", file);
+      upload.append("summary", currentTrackrForm.summary);
+      upload.append("text", currentTrackrForm.text);
+      upload.append("authorId", currentTrackrForm.authorId.toString());
+    };
+
     const actionTrack = async () => {
       if (currentTrackrForm.name) {
         switch (currentAction.value) {
           case "Create":
             {
-              const track = await CreateTrack(currentTrackrForm);
+              const track = await CreateTrack(upload);
               if (track.id) tracks.value.push(track);
             }
             closeButton.value.click();
@@ -192,24 +213,25 @@ export default defineComponent({
       } else alert("Enter track name");
     };
 
-    const prepareForAction = (track: Track) => {
-      currentTrackrForm.id = track.id;
-      currentTrackrForm.name = track.name;
-      currentTrackrForm.summary = track.summary;
-      currentTrackrForm.text = track.text;
-      currentTrackrForm.coverUrl = track.coverUrl;
-      currentTrackrForm.musicUrl = track.musicUrl;
-      currentTrackrForm.authorId = track.authorId;
-    };
+    // const prepareForAction = (track: Track) => {
+    //   currentTrackrForm.id = track.id;
+    //   currentTrackrForm.name = track.name;
+    //   currentTrackrForm.summary = track.summary;
+    //   currentTrackrForm.text = track.text;
+    //   currentTrackrForm.coverUrl = track.coverUrl;
+    //   currentTrackrForm.upload = track;
+    //   currentTrackrForm.authorId = track.authorId;
+    // };
 
     return {
       closeButton,
-      prepareForAction,
+      // prepareForAction,
       currentAction,
       actionTrack,
       tracks,
       currentTrackrForm,
       options,
+      previewFiles,
     };
   },
 });

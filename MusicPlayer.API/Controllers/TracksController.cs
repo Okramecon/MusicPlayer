@@ -32,9 +32,20 @@ namespace MusicPlayer.API.Controllers
         }
 
         [HttpPost]
-        public async Task<GetTrackModel> Post(AddTrackModel model)
+        public async Task<GetTrackModel> Post()
         {
-            return await _service.AddAsync(model);
+            var baseUrl = $"{this.Request.Scheme}://{this.Request.Host}{this.Request.PathBase}/";
+            var file = Request.Form.Files[0];
+            var model = new AddTrackModel()
+            {
+                Name = Request.Form["name"],
+                Summary = Request.Form["summary"],
+                Text = Request.Form["text"],
+                AuthorId = int.Parse(Request.Form["authorId"]),
+                Upload = file,
+
+            };
+            return await _service.AddAsync(model, baseUrl);
         }
 
         [HttpPut]

@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/explicit-module-boundary-types */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import Genre from "./models/Genre";
 import axios, { AxiosInstance } from "axios";
 import { AccountResponse } from "./models/response/AccountResponse";
@@ -86,16 +88,24 @@ export async function GetAllTracks(): Promise<Track[]> {
   return apiClient.get("/tracks/").then((res) => res.data);
 }
 
-export async function CreateTrack(track: Track): Promise<Track> {
-  return apiClient
-    .post("/tracks/", JSON.stringify(track))
-    .then((res) => res.data);
-}
+// export async function CreateTrack(track: any): Promise<any> {
+//   return apiClient
+//     .post("/tracks/", JSON.stringify(track))
+//     .then((res) => res.data);
+// }
 
 export async function EditTrack(track: Track): Promise<Track> {
   return apiClient
     .put("/tracks/", JSON.stringify(track))
     .then((res) => res.data);
+}
+
+export async function CreateTrack(track: FormData): Promise<Track> {
+  return axios.post("http://localhost:52455/api/tracks/", track, {
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
+  });
 }
 
 export async function DeleteTrack(id: number): Promise<number> {
