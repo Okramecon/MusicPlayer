@@ -7,6 +7,25 @@ html, body, #app {
   font-family: 'Mali', cursive;
 }
 
+body {
+  height: 100vh;
+}
+
+#app {
+  height: 100%;
+}
+
+.navbar {
+  height: 13.4978229318%;
+  min-height: 93px;
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+}
+
+.container {
+  height: 85.3410740203%;
+}
+
 .cuted-cell {
     overflow: hidden;
     display: -webkit-inline-box;
