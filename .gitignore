@@ -133,5 +133,6 @@ $RECYCLE.BIN/
 _NCrunch*
 
 .vs/
-MuscManager/wwwroot/Locals/
-MuscManager/appsettings.json
+MusicPlayer.API/StaticFiles/MusiccurrentIndex
+MusicPlayer.API/StaticFiles/appsettings.Development.json
+MusicPlayer.API/StaticFiles/appsettings.json
