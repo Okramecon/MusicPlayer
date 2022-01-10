@@ -1,9 +1,9 @@
 ﻿using AutoMapper;
 using MusicPlayer.DAL.Entities;
+using MusicPlayer.Models;
 using MusicPlayer.Models.Models;
 using MusicPlayer.Models.Models.GenreModels;
 using MusicPlayer.Models.ResponseModels;
-using System.IO;
 using System.Linq;
 
 namespace MusicPlayer.API
@@ -14,6 +14,8 @@ namespace MusicPlayer.API
         {
             CreateMap<Account, AccountResponse>()
                 .ForMember("RoleName", opt => opt.MapFrom(c => c.Role.Name)).ReverseMap();
+            CreateMap<AddAccountModel, Account>();
+            CreateMap<Account, GetAccountModel>();
 
             CreateMap<AddGenreModel, Genre>();
             CreateMap<EditGenreModel, Genre>();

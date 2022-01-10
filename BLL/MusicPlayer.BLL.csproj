@@ -10,6 +10,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Models\MusicPlayer.Models.csproj" />
+    <ProjectReference Include="..\MusicPlayer.Authenticate\MusicPlayer.Authenticate.csproj" />
     <ProjectReference Include="..\MusicPlayer.DAL\MusicPlayer.DAL.csproj" />
   </ItemGroup>
 

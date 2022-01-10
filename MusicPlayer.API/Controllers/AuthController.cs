@@ -1,16 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Options;
-using Microsoft.IdentityModel.Tokens;
 using Models.RequestModels;
-using MusicPlayer.Authtificate;
-using MusicPlayer.DAL;
-using MusicPlayer.DAL.Entities;
 using MusicPlayer.Logics;
-using MusicPlayer.Models.ResponseModels;
+using MusicPlayer.Models.Models.AuthModels;
 using System;
-using System.Collections.Generic;
-using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace MusicPlayer.API.Controllers
@@ -19,53 +11,23 @@ namespace MusicPlayer.API.Controllers
     [ApiController]
     public class AuthController : ControllerBase
     {
-        private readonly IOptions<AuthOptions> _authOptions;
         private readonly AuthService _service;
-        public AuthController(IOptions<AuthOptions> authOptions, AppDbContext context)
+        public AuthController(AuthService service)
         {
-            _authOptions = authOptions;
-            _service = new AuthService(context);
+            _service = service;
         }
 
-        [HttpPost("/login/")]
-        //public async Task<AccountResponse> Login([FromBody] LoginRequest req)
-        //{
-        //    var existAccount = _service.AuthenticateAccount(req.UserName, req.Password);
-
-        //    if (existAccount != null)
-        //    {
-        //        var token = GenerateJWT(existAccount);
-
-        //        return new AccountResponse()
-        //        {
-        //            AccessToken = token,
-                    
-        //        };
-        //    }
-        //}
-
-        private string GenerateJWT(Account account)
+        [HttpPost("")]
+        public async Task<ResponseAuthModel> Login(LoginRequest req)
         {
-            var authParams = _authOptions.Value;
-
-            var securityKey = authParams.GetSymmetricSecurityKey();
-            var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
-
-            var claims = new List<Claim>()
+            try
             {
-                new Claim(JwtRegisteredClaimNames.Name, account.UserName),
-                new Claim(JwtRegisteredClaimNames.Sub, account.Id.ToString()),
-                new Claim("role", account.Role.Name)
-            };
-
-            var token = new JwtSecurityToken(
-                authParams.Issuer,
-                authParams.Audience,
-                claims,
-                expires: DateTime.Now.AddSeconds(authParams.TokenLifeTime),
-                signingCredentials: credentials);
-
-            return new JwtSecurityTokenHandler().WriteToken(token);
+                return await _service.Authenticate(req.UserName, req.Password);
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
         }
     }
 }

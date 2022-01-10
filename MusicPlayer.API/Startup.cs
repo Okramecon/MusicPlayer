@@ -22,6 +22,7 @@ namespace MusicPlayer.API
             services.RegisterDbContext(_configuration);
             services.AddControllers();
 
+            services.RegisterOptions(_configuration);
             services.RegisterJwtAuthorization(_configuration);
 
             services.RegisterServices();
