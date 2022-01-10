@@ -8,6 +8,7 @@ export default class Track {
   upload: any;
   musicUrl: string;
   authorId: number;
+  howl: unknown | null;
 
   constructor() {
     this.id = 0;
@@ -18,5 +19,6 @@ export default class Track {
     this.upload = {};
     this.musicUrl = "";
     this.authorId = 0;
+    this.howl = null;
   }
 }
