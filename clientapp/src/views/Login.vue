@@ -65,6 +65,7 @@ import Login from "@/models/Login";
 import { LogIn } from "@/api";
 import { User } from "@/models/User";
 import router from "@/router";
+import store from "@/store";
 
 export default defineComponent({
   async setup() {
@@ -77,11 +78,12 @@ export default defineComponent({
       }
 
       const user: User = await LogIn(loginForm.value);
+      if (user) {
+        store.commit("changeRole", user.roleName);
+        localStorage.user = JSON.stringify(user);
 
-      localStorage.user = JSON.stringify(user);
-
-      router.push({ name: "Home" });
-      window.location.reload();
+        router.push({ name: "Home" });
+      }
     };
 
     return {

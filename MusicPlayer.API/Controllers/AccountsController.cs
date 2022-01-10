@@ -9,7 +9,6 @@ using System.Threading.Tasks;
 
 namespace MusicPlayer.API.Controllers
 {
-    [Authorize(Roles = "Admin")]
     [Route("api/[controller]")]
     [ApiController]
     public class AccountsController : ControllerBase
@@ -24,19 +23,6 @@ namespace MusicPlayer.API.Controllers
         public async Task<List<AccountResponse>> GetAllAccounts()
         {
             return await _service.GetAllAccounts();
-        }
-
-        [HttpPost("")]
-        public async Task Register(AddAccountModel model)
-        {
-            try
-            {
-                await _service.Register(model);
-            }
-            catch (Exception e)
-            {
-                throw e;
-            }
         }
     }
 }

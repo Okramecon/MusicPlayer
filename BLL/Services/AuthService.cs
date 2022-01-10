@@ -1,10 +1,12 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
+﻿using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using MusicPlayer.Authtificate;
+using MusicPlayer.BLL.Services;
 using MusicPlayer.DAL;
 using MusicPlayer.DAL.Entities;
+using MusicPlayer.Models;
 using MusicPlayer.Models.Models.AuthModels;
 using System;
 using System.Collections.Generic;
@@ -15,14 +17,12 @@ using System.Threading.Tasks;
 
 namespace MusicPlayer.Logics
 {
-    public class AuthService
+    public class AuthService : BaseContextService
     {
-        private readonly AppDbContext _context;
         private readonly AuthOptions _authOptions;
 
-        public AuthService(AppDbContext context, IOptions<AuthOptions> options)
+        public AuthService(AppDbContext context, IOptions<AuthOptions> options, IMapper mapper) : base(context, mapper)
         {
-            _context = context;
             _authOptions = options.Value;
         }
 
@@ -68,6 +68,18 @@ namespace MusicPlayer.Logics
                 RoleName = user.Role.Name,
                 UserName = user.UserName
             };
+        }
+
+        public async Task Register(AddAccountModel model)
+        {
+            var userNameAlreadyExist = await _context.Accounts.AnyAsync(a => a.UserName == model.UserName);
+            if (userNameAlreadyExist)
+                throw new System.Exception("Account with same username already exist.");
+
+            var account = _mapper.Map<Account>(model);
+            account.RoleId = 2;
+            await _context.Accounts.AddAsync(account);
+            await _context.SaveChangesAsync();
         }
     }
 }

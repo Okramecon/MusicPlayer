@@ -28,14 +28,11 @@
           <td>123</td>
           <td>123</td>
           <td>
-            <button
-              type="button"
-              class="btn me-2"
-              @click="selectSound(track.id)"
-            >
+            <button type="button" class="btn me-2">
               <svg
                 v-if="state.audioPlaying[track.id]"
                 @click="play()"
+                id="playing"
                 class="w-6 h-6 m-auto"
                 fill="currentColor"
                 xmlns="http://www.w3.org/2000/svg"
@@ -45,7 +42,8 @@
               </svg>
               <svg
                 v-else
-                @click="pause()"
+                id="stoping"
+                @click="pause(), selectSound(track.id)"
                 class="w-6 h-6 m-auto"
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
@@ -67,6 +65,7 @@
               </svg>
             </button>
             <button
+              v-if="role == 'Admin'"
               type="button"
               class="btn me-2"
               data-bs-toggle="modal"
@@ -76,6 +75,7 @@
               Edit
             </button>
             <button
+              v-if="role == 'Admin'"
               type="button"
               class="btn ms-2"
               data-bs-toggle="modal"
@@ -91,11 +91,12 @@
 
     <!-- Button trigger modal -->
     <button
+      v-if="role == 'Admin'"
       type="button"
-      class="btn"
+      class="btn mb-4"
       data-bs-toggle="modal"
       data-bs-target="#exampleModal"
-      @click="currentAction = 'Create'"
+      @click="prepareForAction(null), (currentAction = 'Create')"
     >
       Add Track
     </button>
@@ -404,9 +405,10 @@ import {
   DeleteTrack,
   GetAllAuthors,
 } from "@/api";
-import { defineComponent, reactive, ref } from "vue";
+import { defineComponent, reactive, ref, computed } from "vue";
 import Multiselect from "@vueform/multiselect";
 import { Howl, Howler } from "howler";
+import store from "@/store";
 
 export default defineComponent({
   components: {
@@ -426,7 +428,6 @@ export default defineComponent({
       repeat: false,
     });
 
-    const currentIndex = ref(0);
     const duration = ref("00:00");
     const timer = ref("00:00");
     const pauseTrack = ref(false);
@@ -440,10 +441,11 @@ export default defineComponent({
     const state = reactive({
       audioPlaying: [],
     });
+    const currentIndex = ref(tracks.value[0] ? tracks.value[0].id : 0);
 
     const closeButton = ref();
     const upload = new FormData();
-    const currentTrackrForm = reactive({
+    let currentTrackrForm = reactive({
       id: 0,
       name: "",
       summary: "",
@@ -452,10 +454,11 @@ export default defineComponent({
       upload: {},
       musicUrl: "",
       authorId: 0,
-      howl: null,
+      howl: {},
     });
     const currentAction = ref("Create");
     const authors = ref(await GetAllAuthors());
+    const role = computed(() => store.state.role);
 
     const options = ref([]);
 
@@ -516,14 +519,26 @@ export default defineComponent({
     };
 
     const prepareForAction = (track) => {
-      currentTrackrForm.id = track.id;
-      currentTrackrForm.name = track.name;
-      currentTrackrForm.summary = track.summary;
-      currentTrackrForm.text = track.text;
-      currentTrackrForm.coverUrl = track.coverUrl;
-      currentTrackrForm.authorId = track.authorId;
-      currentTrackrForm.upload = upload;
-      currentTrackrForm.howl = track.howl;
+      if (track != null) {
+        currentTrackrForm.id = track.id;
+        currentTrackrForm.name = track.name;
+        currentTrackrForm.summary = track.summary;
+        currentTrackrForm.text = track.text;
+        currentTrackrForm.coverUrl = track.coverUrl;
+        currentTrackrForm.authorId = track.authorId;
+        currentTrackrForm.upload = upload;
+        currentTrackrForm.howl = track.howl;
+      } else {
+        currentTrackrForm.id = 0;
+        currentTrackrForm.name = "";
+        currentTrackrForm.summary = "";
+        currentTrackrForm.text = "";
+        currentTrackrForm.coverUrl = "";
+        currentTrackrForm.authorId = 0;
+        currentTrackrForm.upload = {};
+        currentTrackrForm.howl = {};
+        document.getElementById("file").value = "";
+      }
     };
 
     // Functions
@@ -632,9 +647,8 @@ export default defineComponent({
         controlsButtons.repeat
           ? currentIndex.value
           : controlsButtons.random
-          ? (currentIndex.value = Math.floor(
-              Math.random() * tracks.value.length
-            ))
+          ? (currentIndex.value =
+              tracks.value[Math.floor(Math.random() * tracks.value.length)].id)
           : (currentIndex.value = 0);
       } else {
         if (track.howl) {
@@ -643,9 +657,8 @@ export default defineComponent({
         controlsButtons.repeat
           ? currentIndex.value
           : controlsButtons.random
-          ? (currentIndex.value = Math.floor(
-              Math.random() * tracks.value.length
-            ))
+          ? (currentIndex.value =
+              tracks.value[Math.floor(Math.random() * tracks.value.length)].id)
           : currentIndex.value++;
       }
 
@@ -659,25 +672,23 @@ export default defineComponent({
       mutePlayer.value ? (mutePlayer.value = false) : "";
       track.howl && track.howl.mute(true) ? track.howl.mute(false) : "";
       if (!track.howl) {
-        currentIndex.value = tracks.value.length - 1;
+        currentIndex.value = tracks.value[tracks.value.length - 1].id;
       } else if (track.howl && currentIndex.value == 0) {
         track.howl.stop();
         controlsButtons.repeat
           ? currentIndex.value
           : controlsButtons.random
-          ? (currentIndex.value = Math.floor(
-              Math.random() * tracks.value.length
-            ))
-          : (currentIndex.value = tracks.value.length - 1);
+          ? (currentIndex.value =
+              tracks.value[Math.floor(Math.random() * tracks.value.length)].id)
+          : (currentIndex.value = tracks.value[tracks.value.length - 1].id);
       } else if (track.howl) {
         track.howl.stop();
 
         controlsButtons.repeat
           ? currentIndex.value
           : controlsButtons.random
-          ? (currentIndex.value = Math.floor(
-              Math.random() * tracks.value.length
-            ))
+          ? (currentIndex.value =
+              tracks.value[Math.floor(Math.random() * tracks.value.length)].id)
           : currentIndex.value--;
       }
 
@@ -685,7 +696,6 @@ export default defineComponent({
     };
 
     const selectSound = (selectedId) => {
-      console.log(selectedId);
       const track = tracks.value.find((x) => x.id == selectedId);
       currentTrackrForm.id = track.id;
       currentTrackrForm.name = track.name;
@@ -696,12 +706,12 @@ export default defineComponent({
       // currentTrackrForm.howl = track.howl;
       // currentTrackrForm.coverUrl = track.coverUrl;
       // currentTrackrForm.upload = track.upload;
+      currentIndex.value = selectedId;
 
       if (track.howl) {
         track.howl.stop();
         state.audioPlaying[currentIndex.value] = false;
       }
-      currentIndex.value = selectedId;
 
       play();
     };
@@ -759,6 +769,7 @@ export default defineComponent({
       mute,
       mutePlayer,
       sliderBtnVol,
+      role,
     };
   },
 });

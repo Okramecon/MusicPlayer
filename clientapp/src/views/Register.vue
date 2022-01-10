@@ -63,7 +63,6 @@ import router from "@/router";
 export default defineComponent({
   async setup() {
     const loginForm = ref<Login>(new Login());
-    console.log(localStorage.getItem("mashina"));
 
     const register = async () => {
       if (!loginForm.value.userName && !loginForm.value.password) {

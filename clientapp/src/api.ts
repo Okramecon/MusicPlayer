@@ -24,13 +24,13 @@ const apiClient: AxiosInstance = axios.create({
 // Accounts
 export async function LogIn(login: Login): Promise<User> {
   return apiClient
-    .post("/auth/", JSON.stringify(login))
+    .post("/auth/login/", JSON.stringify(login))
     .then((res) => res.data);
 }
 
 export async function Register(login: Login) {
   return apiClient
-    .post("/accounts/", JSON.stringify(login))
+    .post("/auth/registration/", JSON.stringify(login))
     .then((res) => res.status)
     .catch((ex) => alert("This userName already exist"));
 }
@@ -146,11 +146,13 @@ export async function EditTrack(track: Track): Promise<Track> {
 }
 
 export async function CreateTrack(track: FormData): Promise<Track> {
-  return axios.post("http://localhost:52455/api/tracks/", track, {
-    headers: {
-      "Content-Type": "multipart/form-data",
-    },
-  });
+  return axios
+    .post("http://localhost:52455/api/tracks/", track, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    })
+    .then((res) => res.data);
 }
 
 export async function DeleteTrack(id: number): Promise<number> {

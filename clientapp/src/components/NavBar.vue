@@ -2,6 +2,7 @@
   <nav
     class="navbar navbar-expand-lg navbar-dark"
     style="font-size: 1.3rem; font-weight: 700"
+    v-if="isAuthorized"
   >
     <div class="container-fluid container">
       <router-link class="navbar-brand" to="/"> </router-link>
@@ -18,13 +19,8 @@
       </button>
       <div id="navbarSupportedContent" class="collapse navbar-collapse">
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-          <li class="nav-item">
-            <router-link
-              v-if="user && user.roleName && user.roleName == 'Admin'"
-              class="nav-link"
-              aria-current="page"
-              to="/"
-            >
+          <li v-if="role == 'Admin'" class="nav-item">
+            <router-link class="nav-link" aria-current="page" to="/">
               Users
             </router-link>
           </li>
@@ -36,10 +32,7 @@
           <li class="nav-item">
             <router-link class="nav-link" to="/tracks"> Tracks </router-link>
           </li>
-          <li
-            v-if="user && user.roleName && user.roleName == 'Admin'"
-            class="nav-item dropdown"
-          >
+          <li v-if="role == 'Admin'" class="nav-item dropdown">
             <a
               id="navbarDropdown"
               class="nav-link dropdown-toggle"
@@ -79,7 +72,9 @@
             <router-link class="nav-link" to=""> Edit Profile </router-link>
           </li>
           <li class="nav-item">
-            <router-link class="nav-link" to=""> LogOut </router-link>
+            <a style="cursor: pointer" class="nav-link" @click="logOut"
+              >LogOut</a
+            >
           </li>
         </ul>
       </div>
@@ -88,17 +83,25 @@
 </template>
 
 <script lang="ts">
-import { User } from "@/models/User";
+import router from "@/router";
+import store from "@/store";
 import { computed, defineComponent } from "vue";
 
 export default defineComponent({
   setup() {
-    const user = computed(
-      () => JSON.parse(localStorage.getItem("user")!) as User
-    );
+    const isAuthorized = computed(() => store.state.authorized);
+    const role = computed(() => store.state.role);
+
+    const logOut = () => {
+      localStorage.removeItem("user");
+      store.commit("changeRole", "");
+      router.push({ name: "Login" });
+    };
 
     return {
-      user,
+      logOut,
+      isAuthorized,
+      role,
     };
   },
 });

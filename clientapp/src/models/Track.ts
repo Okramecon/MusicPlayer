@@ -19,6 +19,6 @@ export default class Track {
     this.upload = {};
     this.musicUrl = "";
     this.authorId = 0;
-    this.howl = null;
+    this.howl = {};
   }
 }

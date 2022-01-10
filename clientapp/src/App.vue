@@ -8,24 +8,23 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from "vue";
+import { defineComponent, onMounted } from "vue";
 import NavBar from "@/components/NavBar.vue";
+import store from "./store";
+import { User } from "./models/User";
 
 export default defineComponent({
   components: {
     NavBar,
   },
-
   setup() {
-    const isAuth = ref(false);
-
-    if (localStorage.getItem("user")) {
-      isAuth.value = true;
-    } else isAuth.value = false;
-
-    return {
-      isAuth,
-    };
+    onMounted(() => {
+      const userJson = localStorage.getItem("user");
+      if (userJson) {
+        const user = JSON.parse(userJson) as User;
+        store.commit("changeRole", user.roleName);
+      }
+    });
   },
 });
 </script>

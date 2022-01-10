@@ -1,3 +1,4 @@
+import store from "@/store";
 import { createRouter, createWebHistory, RouteRecordRaw } from "vue-router";
 import Home from "../views/Home.vue";
 
@@ -54,13 +55,21 @@ const router = createRouter({
   routes,
 });
 
-// router.beforeEach((to, from, next) => {
-//   console.log(localStorage.getItem("user"));
-//   if (!localStorage.getItem("user")) {
-//     next("/login");
-//   } else {
-//     next();
-//   }
-// });
+router.beforeEach((to, from, next) => {
+  const user = localStorage.getItem("user");
+
+  if (user && to.name !== "Login" && to.name !== "Registration") {
+    store.commit("changeAuthorize", true);
+    next();
+  } else if (user && (to.name === "Login" || to.name === "Registration")) {
+    next({ name: "Home" });
+  } else if (to.name == "Login") {
+    store.commit("changeAuthorize", false);
+    next();
+  } else {
+    store.commit("changeAuthorize", false);
+    next({ name: "Login" });
+  }
+});
 
 export default router;
