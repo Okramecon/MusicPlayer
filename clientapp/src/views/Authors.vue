@@ -11,7 +11,7 @@
         <th scope="col">FullName</th>
         <th scope="col">Pseudonym</th>
         <th scope="col">Bio</th>
-        <th scope="col">Actions</th>
+        <th scope="col" style="width: 200px">Actions</th>
       </tr>
     </thead>
     <tbody>
@@ -26,7 +26,7 @@
         <td>
           <button
             type="button"
-            class="btn btn-primary me-2"
+            class="btn me-2"
             data-bs-toggle="modal"
             data-bs-target="#exampleModal"
             @click="prepareForAction(author), (currentAction = 'Edit')"
@@ -35,7 +35,7 @@
           </button>
           <button
             type="button"
-            class="btn btn-primary ms-2"
+            class="btn ms-2"
             data-bs-toggle="modal"
             data-bs-target="#exampleModal"
             @click="prepareForAction(author), (currentAction = 'Delete')"
@@ -50,10 +50,10 @@
   <!-- Button trigger modal -->
   <button
     type="button"
-    class="btn btn-primary"
+    class="btn"
     data-bs-toggle="modal"
     data-bs-target="#exampleModal"
-    @click="currentAction = 'Create'"
+    @click="prepareForAction(), (currentAction = 'Create')"
   >
     Add author
   </button>
@@ -66,57 +66,62 @@
     aria-labelledby="exampleModalLabel"
     aria-hidden="true"
   >
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">
-            {{ currentAction }} Author
-          </h5>
-        </div>
-        <div v-if="currentAction != 'Delete'" class="modal-body">
-          <label for="genreInput" class="form-label">Author FullName</label>
-          <input
-            v-model="currentAuthorForm.fullName"
-            type="text"
-            class="form-control"
-            id="genreInput"
-            aria-describedby="genreHelp"
-          />
-          <label for="genreInput" class="form-label">Author Pseudonym</label>
-          <input
-            v-model="currentAuthorForm.pseudonym"
-            type="text"
-            class="form-control"
-            id="genreInput"
-            aria-describedby="genreHelp"
-          />
-          <label for="genreInput" class="form-label">Author Bio</label>
-          <textarea
-            v-model="currentAuthorForm.bio"
-            type="text"
-            class="form-control"
-            id="genreInput"
-            aria-describedby="genreHelp"
-          />
-        </div>
-        <div class="modal-footer">
-          <button
-            type="button"
-            class="btn btn-secondary"
-            data-bs-dismiss="modal"
-            ref="closeButton"
-          >
-            <span> Cancel </span>
-          </button>
-          <button type="button" @click="actionAuthor()" class="btn btn-primary">
-            <span v-if="currentAction == 'Delete'"> Yes </span>
-            <span v-else>
-              {{ currentAction }}
-            </span>
-          </button>
+    <form @submit="actionAuthor()">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">
+              {{ currentAction }} Author
+            </h5>
+          </div>
+          <div v-if="currentAction != 'Delete'" class="modal-body">
+            <label for="genreInput" class="form-label">Author FullName</label>
+            <input
+              required
+              v-model="currentAuthorForm.fullName"
+              type="text"
+              class="form-control"
+              id="genreInput"
+              aria-describedby="genreHelp"
+            />
+            <label for="genreInput" class="form-label">Author Pseudonym</label>
+            <input
+              required
+              v-model="currentAuthorForm.pseudonym"
+              type="text"
+              class="form-control"
+              id="genreInput"
+              aria-describedby="genreHelp"
+            />
+            <label for="genreInput" class="form-label">Author Bio</label>
+            <textarea
+              required
+              v-model="currentAuthorForm.bio"
+              type="text"
+              class="form-control"
+              id="genreInput"
+              aria-describedby="genreHelp"
+            />
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn"
+              data-bs-dismiss="modal"
+              ref="closeButton"
+            >
+              <span> Cancel </span>
+            </button>
+            <button type="submit" class="btn">
+              <span v-if="currentAction == 'Delete'"> Yes </span>
+              <span v-else>
+                {{ currentAction }}
+              </span>
+            </button>
+          </div>
         </div>
       </div>
-    </div>
+    </form>
   </div>
 </template>
 
@@ -174,7 +179,7 @@ export default defineComponent({
       } else alert("Enter genre name");
     };
 
-    const prepareForAction = (author: Author) => {
+    const prepareForAction = (author: Author = new Author()) => {
       currentAuthorForm.id = author.id;
       currentAuthorForm.fullName = author.fullName;
       currentAuthorForm.pseudonym = author.pseudonym;

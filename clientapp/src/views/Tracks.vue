@@ -30,7 +30,7 @@
           <td>
             <button
               type="button"
-              class="btn btn-primary me-2"
+              class="btn me-2"
               @click="selectSound(track.id)"
             >
               <svg
@@ -68,7 +68,7 @@
             </button>
             <button
               type="button"
-              class="btn btn-primary me-2"
+              class="btn me-2"
               data-bs-toggle="modal"
               data-bs-target="#exampleModal"
               @click="prepareForAction(track), (currentAction = 'Edit')"
@@ -77,7 +77,7 @@
             </button>
             <button
               type="button"
-              class="btn btn-primary ms-2"
+              class="btn ms-2"
               data-bs-toggle="modal"
               data-bs-target="#exampleModal"
               @click="prepareForAction(track), (currentAction = 'Delete')"
@@ -92,7 +92,7 @@
     <!-- Button trigger modal -->
     <button
       type="button"
-      class="btn btn-primary"
+      class="btn"
       data-bs-toggle="modal"
       data-bs-target="#exampleModal"
       @click="currentAction = 'Create'"
@@ -569,47 +569,47 @@ export default defineComponent({
     };
 
     const pause = () => {
-      const track = tracks.value.find((t) => t.id == currentIndex.value).howl;
-      if (track) {
-        track.pause();
+      const track = tracks.value.find((t) => t.id == currentIndex.value);
+      if (track.howl) {
+        track.howl.pause();
         pauseTrack.value = false;
         state.audioPlaying[currentIndex.value] = false;
       }
     };
 
     const stepFunction = () => {
-      const track = tracks.value.find((t) => t.id == currentIndex.value).howl;
-      const seek = track.seek();
+      const track = tracks.value.find((t) => t.id == currentIndex.value);
+      const seek = track.howl.seek();
       timer.value = formatTime(Math.round(seek));
-      step.value = (seek * 100) / track.duration();
+      step.value = (seek * 100) / track.howl.duration();
 
       sliderBtn.value =
         progress.value.offsetWidth * (step.value / 100) +
         progress.value.offsetWidth * 0.05 -
         25;
 
-      if (track.playing())
+      if (track.howl.playing())
         window.requestAnimationFrame(stepFunction.bind(this));
     };
 
     const seek = (event) => {
       const per = event.offsetX / progress.value.clientWidth;
 
-      const track = tracks.value.find((t) => t.id == currentIndex.value).howl;
+      const track = tracks.value.find((t) => t.id == currentIndex.value);
 
-      if (track) {
+      if (track.howl) {
         let barWidth = 0;
-        if (track.playing()) {
-          track.pause();
-          track.seek(track.duration() * per);
+        if (track.howl.playing()) {
+          track.howl.pause();
+          track.howl.seek(track.howl.duration() * per);
           barWidth = (per * 100) / 100;
           sliderBtn.value =
             progress.value.offsetWidth * barWidth +
             progress.value.offsetWidth * 0.05 -
             25;
-          track.play();
+          track.howl.play();
         } else {
-          track.seek(track.duration() * per);
+          track.howl.seek(track.howl.duration() * per);
           barWidth = (per * 100) / 100;
           sliderBtn.value =
             progress.value.offsetWidth * barWidth +
@@ -621,14 +621,14 @@ export default defineComponent({
 
     const next = () => {
       controlsButtons.nextButton = false;
-      const track = tracks.value.find((t) => t.id == currentIndex.value).howl;
+      const track = tracks.value.find((t) => t.id == currentIndex.value);
 
       state.audioPlaying[currentIndex.value] = false;
       mutePlayer.value ? (mutePlayer.value = false) : "";
-      track && track.mute(true) ? track.mute(false) : "";
+      track.howl && track.howl.mute(true) ? track.howl.mute(false) : "";
 
-      if (track && tracks.value.length - 1 == currentIndex.value) {
-        track.stop();
+      if (track.howl && tracks.value.length - 1 == currentIndex.value) {
+        track.howl.stop();
         controlsButtons.repeat
           ? currentIndex.value
           : controlsButtons.random
@@ -637,8 +637,8 @@ export default defineComponent({
             ))
           : (currentIndex.value = 0);
       } else {
-        if (track) {
-          track.stop();
+        if (track.howl) {
+          track.howl.stop();
         }
         controlsButtons.repeat
           ? currentIndex.value
@@ -653,15 +653,15 @@ export default defineComponent({
     };
 
     const previous = () => {
-      const track = tracks.value.find((t) => t.id == currentIndex.value).howl;
+      const track = tracks.value.find((t) => t.id == currentIndex.value);
       controlsButtons.prevButton = false;
       state.audioPlaying[currentIndex.value] = false;
       mutePlayer.value ? (mutePlayer.value = false) : "";
-      track && track.mute(true) ? track.mute(false) : "";
-      if (!track) {
+      track.howl && track.howl.mute(true) ? track.howl.mute(false) : "";
+      if (!track.howl) {
         currentIndex.value = tracks.value.length - 1;
-      } else if (track && currentIndex.value == 0) {
-        track.stop();
+      } else if (track.howl && currentIndex.value == 0) {
+        track.howl.stop();
         controlsButtons.repeat
           ? currentIndex.value
           : controlsButtons.random
@@ -669,8 +669,8 @@ export default defineComponent({
               Math.random() * tracks.value.length
             ))
           : (currentIndex.value = tracks.value.length - 1);
-      } else if (track) {
-        track.stop();
+      } else if (track.howl) {
+        track.howl.stop();
 
         controlsButtons.repeat
           ? currentIndex.value
@@ -685,10 +685,20 @@ export default defineComponent({
     };
 
     const selectSound = (selectedId) => {
-      const track = tracks.value.find((x) => x.id == selectedId).howl;
+      console.log(selectedId);
+      const track = tracks.value.find((x) => x.id == selectedId);
+      currentTrackrForm.id = track.id;
+      currentTrackrForm.name = track.name;
+      currentTrackrForm.text = track.text;
+      currentTrackrForm.summary = track.summary;
+      // currentTrackrForm.musicUrl = track.musicUrl;
+      // currentTrackrForm.authorId = track.authorId;
+      // currentTrackrForm.howl = track.howl;
+      // currentTrackrForm.coverUrl = track.coverUrl;
+      // currentTrackrForm.upload = track.upload;
 
-      if (track) {
-        track.stop();
+      if (track.howl) {
+        track.howl.stop();
         state.audioPlaying[currentIndex.value] = false;
       }
       currentIndex.value = selectedId;
@@ -708,12 +718,12 @@ export default defineComponent({
     };
 
     const mute = () => {
-      const track = tracks.value.find((t) => t.id == currentIndex.value).howl;
+      const track = tracks.value.find((t) => t.id == currentIndex.value);
 
-      if (track) {
+      if (track.howl) {
         mutePlayer.value = !mutePlayer.value;
 
-        mutePlayer.value ? track.mute(true) : track.mute(false);
+        mutePlayer.value ? track.howl.mute(true) : track.howl.mute(false);
       }
     };
 

@@ -18,7 +18,7 @@
         <td>
           <button
             type="button"
-            class="btn btn-primary me-2"
+            class="btn me-2"
             data-bs-toggle="modal"
             data-bs-target="#exampleModal"
             @click="prepareForAction(genre), (currentAction = 'Edit')"
@@ -27,7 +27,7 @@
           </button>
           <button
             type="button"
-            class="btn btn-primary ms-2"
+            class="btn ms-2"
             data-bs-toggle="modal"
             data-bs-target="#exampleModal"
             @click="prepareForAction(genre), (currentAction = 'Delete')"
@@ -42,10 +42,10 @@
   <!-- Button trigger modal -->
   <button
     type="button"
-    class="btn btn-primary"
+    class="btn"
     data-bs-toggle="modal"
     data-bs-target="#exampleModal"
-    @click="currentAction = 'Create'"
+    @click="prepareForAction(), (currentAction = 'Create')"
   >
     Add genre
   </button>
@@ -58,77 +58,79 @@
     aria-labelledby="exampleModalLabel"
     aria-hidden="true"
   >
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">
-            {{ currentAction }} Genre
-          </h5>
-        </div>
-        <div v-if="currentAction != 'Delete'" class="modal-body">
-          <label for="genreInput" class="form-label">Genre name</label>
-          <input
-            v-model="genreInputName"
-            type="text"
-            class="form-control"
-            id="genreInput"
-            aria-describedby="genreHelp"
-          />
-        </div>
-        <div class="modal-footer">
-          <button
-            type="button"
-            class="block-button btn welcome"
-            data-bs-dismiss="modal"
-            ref="closeButton"
-          >
-            <span> Cancel </span>
-          </button>
-          <button
-            type="button"
-            @click="actionGenre()"
-            class="block-button btn welcome"
-          >
-            <span v-if="currentAction == 'Delete'"> Yes </span>
-            <span v-else> {{ currentAction }} </span>
-          </button>
+    <form @submit="actionGenre()">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">
+              {{ currentAction }} Genre
+            </h5>
+          </div>
+          <div v-if="currentAction != 'Delete'" class="modal-body">
+            <label class="form-label">Genre name</label>
+            <input
+              required
+              v-model="currentGenreForm.name"
+              type="text"
+              class="form-control"
+              aria-describedby="genreHelp"
+            />
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="block-button btn welcome"
+              data-bs-dismiss="modal"
+              ref="closeButton"
+            >
+              <span> Cancel </span>
+            </button>
+            <button type="submit" class="block-button btn welcome">
+              <span v-if="currentAction == 'Delete'"> Yes </span>
+              <span v-else> {{ currentAction }} </span>
+            </button>
+          </div>
         </div>
       </div>
-    </div>
+    </form>
   </div>
 </template>
 
 <script lang="ts">
 import { GetAllGenres, CreateGenre, EditGenre, DeleteGenre } from "@/api";
 import Genre from "@/models/Genre";
-import { defineComponent, ref } from "vue";
+import { defineComponent, reactive, ref } from "vue";
 
 export default defineComponent({
   async setup() {
     const closeButton = ref();
-    let currentGenreId = 0;
-    const genreInputName = ref("");
+    const currentGenreForm = reactive({
+      id: 0,
+      name: "",
+    });
     const currentAction = ref("Create");
     const genres = ref<Genre[]>(await GetAllGenres());
 
     const actionGenre = async () => {
-      if (genreInputName.value) {
+      if (currentGenreForm.name) {
         switch (currentAction.value) {
           case "Create":
             {
-              const genre = await CreateGenre(genreInputName.value);
+              const genre = await CreateGenre(currentGenreForm.name);
               if (genre.id) genres.value.push(genre);
             }
             closeButton.value.click();
             break;
 
           case "Edit": {
-            const index = genres.value.findIndex((g) => g.id == currentGenreId);
+            const index = genres.value.findIndex(
+              (g) => g.id == currentGenreForm.id
+            );
             if (~index) {
               const copiedGenre: Genre = JSON.parse(
                 JSON.stringify(genres.value[index])
               );
-              copiedGenre.name = genreInputName.value;
+              copiedGenre.name = currentGenreForm.name;
               const editedGenre = await EditGenre(copiedGenre);
 
               genres.value.splice(index, 1, editedGenre);
@@ -137,9 +139,11 @@ export default defineComponent({
             break;
           }
           default: {
-            const index = genres.value.findIndex((g) => g.id == currentGenreId);
+            const index = genres.value.findIndex(
+              (g) => g.id == currentGenreForm.id
+            );
             if (~index) {
-              const id = await DeleteGenre(currentGenreId);
+              const id = await DeleteGenre(currentGenreForm.id);
               if (id) {
                 genres.value.splice(index, 1);
               }
@@ -151,13 +155,14 @@ export default defineComponent({
       } else alert("Enter genre name");
     };
 
-    const prepareForAction = (currentGenre: Genre) => {
-      currentGenreId = currentGenre.id;
-      genreInputName.value = currentGenre.name;
+    const prepareForAction = (currentGenre: Genre = new Genre()) => {
+      console.log(currentGenre);
+      currentGenreForm.id = currentGenre.id;
+      currentGenreForm.name = currentGenre.name;
     };
 
     return {
-      genreInputName,
+      currentGenreForm,
       genres,
       actionGenre,
       closeButton,

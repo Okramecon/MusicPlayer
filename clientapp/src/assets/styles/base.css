@@ -59,7 +59,12 @@ body {
     color: white !important;
   }
   
-  .block-button:hover {
+  .block-button:hover,
+  .btn:hover {
+    background: linear-gradient(135deg, rgba(0,0,0,1) 0%, rgb(231, 43, 74) 52%, rgb(179, 13, 85) 100%);
+    background-size: 100%;
+    background-position: center;
+    background-attachment: fixed;
     transform: scale(1.1);
   }
 
@@ -67,12 +72,25 @@ body {
     transform: scale(1.1);
   }
   
-  .welcome {
+  .welcome,
+  .btn {
     background: rgb(0,0,0);
 background: linear-gradient(135deg, rgba(0,0,0,1) 0%, rgba(250,81,110,1) 52%, rgba(210,49,120,1) 100%);
     background-size: 100%;
     background-position: center;
     background-attachment: fixed;
+    transition: 0.5s !important;
+  }
+
+  .modal-dialog {
+    height: 100vh;
+    margin-block: 0 !important;
+    display: flex;
+    align-items: center;
+  }
+
+  .modal-body {
+    text-align: start;
   }
 
 

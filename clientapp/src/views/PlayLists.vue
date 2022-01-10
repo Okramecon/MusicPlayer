@@ -28,7 +28,7 @@
 
   <button
     type="button"
-    class="btn btn-primary"
+    class="btn"
     data-bs-toggle="modal"
     data-bs-target="#exampleModal"
     @click="currentAction = 'Create'"

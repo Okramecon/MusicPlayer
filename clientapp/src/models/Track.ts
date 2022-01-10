@@ -1,14 +1,14 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 export default class Track {
   id: number;
   name: string;
   summary: string;
   text: string;
   coverUrl: string;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   upload: any;
   musicUrl: string;
   authorId: number;
-  howl: unknown | null;
+  howl: any | null;
 
   constructor() {
     this.id = 0;
