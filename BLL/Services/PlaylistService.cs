@@ -29,6 +29,26 @@ namespace MusicPlayer.BLL.Services
             return _mapper.Map<GetPlaylistModel>(playlist);
         }
 
+        public async Task<TrackModel> AddAsync(int playlistId, int trackId)
+        {
+            var playlist = await _context.Playlists.FirstOrDefaultAsync(x => x.Id == playlistId);
+            var track = await _context.Tracks.FirstOrDefaultAsync(x => x.Id == trackId);
+
+            if (playlist != default && track != default)
+            {
+                var playlistTrack = new PlaylistTrack()
+                {
+                    PlaylistId = playlistId,
+                    TrackId = trackId,
+                };
+            
+                await _context.PlaylistTracks.AddAsync(playlistTrack);
+            }
+            await _context.SaveChangesAsync();
+
+            return _mapper.Map<GetTrackModel>(track);
+        }
+
         public async Task<GetPlaylistModel> AddAsync(AddPlaylistModel model)
         {
             var playlist = _mapper.Map<Playlist>(model);
@@ -48,6 +68,18 @@ namespace MusicPlayer.BLL.Services
             await _context.SaveChangesAsync();
 
             return _mapper.Map<GetPlaylistModel>(playlist);
+        }
+
+        public async Task<int> DeleteAsync(int playlistId, int trackId)
+        {
+            var playlistTrack = await _context.PlaylistTracks.FirstOrDefaultAsync(x => x.PlaylistId == playlistId && x.TrackId == trackId);
+            if (playlistTrack == default)
+            {
+                return 0;
+            }
+            _context.PlaylistTracks.Remove(playlistTrack);
+            await _context.SaveChangesAsync();
+            return trackId;
         }
 
         public async Task<int> DeleteAsync(int id)

@@ -66,9 +66,22 @@ export async function GetAllPlaylists(): Promise<Playlist[]> {
   return apiClient.get("/playlists/").then((res) => res.data);
 }
 
+export async function GetPlaylist(id: number): Promise<Playlist> {
+  return apiClient.get("/playlists/" + id).then((res) => res.data);
+}
+
 export async function CreatePlaylist(playlist: Playlist): Promise<Playlist> {
   return apiClient
     .post("/playlists/", JSON.stringify(playlist))
+    .then((res) => res.data);
+}
+
+export async function AddTrackToPlaylist(
+  playlistId: number,
+  trackId: number
+): Promise<Track> {
+  return apiClient
+    .post("/playlists/" + playlistId + "/" + trackId)
     .then((res) => res.data);
 }
 
@@ -78,12 +91,20 @@ export async function EditPlaylist(playlist: Playlist): Promise<Playlist> {
     .then((res) => res.data);
 }
 
+export async function RemoveTrackFromPlaylist(
+  playlistId: number,
+  trackId: number
+): Promise<number> {
+  return apiClient
+    .delete("/playlists/" + playlistId + "/" + trackId)
+    .then((res) => res.data);
+}
+
 export async function DeletePlaylist(id: number): Promise<number> {
   return apiClient.delete("/playlists/" + id).then((res) => res.data);
 }
 
 // Tracks
-// Playlists
 export async function GetAllTracks(): Promise<Track[]> {
   return apiClient.get("/tracks/").then((res) => res.data);
 }
