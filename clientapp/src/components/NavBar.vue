@@ -19,7 +19,12 @@
       <div id="navbarSupportedContent" class="collapse navbar-collapse">
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
           <li class="nav-item">
-            <router-link class="nav-link" aria-current="page" to="/">
+            <router-link
+              v-if="user && user.roleName && user.roleName == 'Admin'"
+              class="nav-link"
+              aria-current="page"
+              to="/"
+            >
               Users
             </router-link>
           </li>
@@ -31,7 +36,10 @@
           <li class="nav-item">
             <router-link class="nav-link" to="/tracks"> Tracks </router-link>
           </li>
-          <li class="nav-item dropdown">
+          <li
+            v-if="user && user.roleName && user.roleName == 'Admin'"
+            class="nav-item dropdown"
+          >
             <a
               id="navbarDropdown"
               class="nav-link dropdown-toggle"
@@ -80,9 +88,20 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from "vue";
+import { User } from "@/models/User";
+import { computed, defineComponent } from "vue";
 
-export default defineComponent({});
+export default defineComponent({
+  setup() {
+    const user = computed(
+      () => JSON.parse(localStorage.getItem("user")!) as User
+    );
+
+    return {
+      user,
+    };
+  },
+});
 </script>
 
 <style scoped>

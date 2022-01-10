@@ -8,12 +8,24 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from "vue";
+import { defineComponent, ref } from "vue";
 import NavBar from "@/components/NavBar.vue";
 
 export default defineComponent({
   components: {
     NavBar,
+  },
+
+  setup() {
+    const isAuth = ref(false);
+
+    if (localStorage.getItem("user")) {
+      isAuth.value = true;
+    } else isAuth.value = false;
+
+    return {
+      isAuth,
+    };
   },
 });
 </script>

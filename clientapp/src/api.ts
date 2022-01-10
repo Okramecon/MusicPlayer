@@ -6,15 +6,39 @@ import { AccountResponse } from "./models/response/AccountResponse";
 import Author from "./models/Author";
 import Playlist from "./models/PlayList";
 import Track from "./models/Track";
+import Login from "./models/Login";
+import { User } from "./models/User";
 
 const apiClient: AxiosInstance = axios.create({
   baseURL: "http://localhost:52455/api",
   headers: {
     "Content-type": "application/json",
+    Authorization:
+      "Bearer " +
+      (localStorage.getItem("user") != null
+        ? JSON.parse(localStorage.getItem("user")!).accessToken
+        : ""),
   },
 });
 
 // Accounts
+export async function LogIn(login: Login): Promise<User> {
+  return apiClient
+    .post("/auth/", JSON.stringify(login))
+    .then((res) => res.data);
+}
+
+export async function Register(login: Login) {
+  return apiClient
+    .post("/accounts/", JSON.stringify(login))
+    .then((res) => res.status)
+    .catch((ex) => alert("This userName already exist"));
+}
+
+export async function ResetPassword(userName: string): Promise<string> {
+  return apiClient.post("", JSON.stringify(userName)).then((res) => res.data);
+}
+
 export async function GetAllAccounts(): Promise<AccountResponse[]> {
   return apiClient.get("/accounts/").then((res) => res.data);
 }

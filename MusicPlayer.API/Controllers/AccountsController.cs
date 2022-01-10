@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using MusicPlayer.BLL.Services;
 using MusicPlayer.Models;
 using MusicPlayer.Models.ResponseModels;
@@ -8,6 +9,7 @@ using System.Threading.Tasks;
 
 namespace MusicPlayer.API.Controllers
 {
+    [Authorize(Roles = "Admin")]
     [Route("api/[controller]")]
     [ApiController]
     public class AccountsController : ControllerBase
@@ -33,7 +35,7 @@ namespace MusicPlayer.API.Controllers
             }
             catch (Exception e)
             {
-                BadRequest(e.Message);
+                throw e;
             }
         }
     }

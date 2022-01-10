@@ -8,6 +8,21 @@ const routes: Array<RouteRecordRaw> = [
     component: Home,
   },
   {
+    path: "/login",
+    name: "Login",
+    component: () => import("../views/Login.vue"),
+  },
+  {
+    path: "/registration",
+    name: "Registration",
+    component: () => import("../views/Register.vue"),
+  },
+  {
+    path: "/reset-password",
+    name: "ResetPassword",
+    component: () => import("../views/ForgotPassword.vue"),
+  },
+  {
     path: "/genres",
     name: "Genres",
     component: () => import("../views/Genres.vue"),
@@ -38,5 +53,14 @@ const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
   routes,
 });
+
+// router.beforeEach((to, from, next) => {
+//   console.log(localStorage.getItem("user"));
+//   if (!localStorage.getItem("user")) {
+//     next("/login");
+//   } else {
+//     next();
+//   }
+// });
 
 export default router;
