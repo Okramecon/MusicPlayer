@@ -9,20 +9,22 @@
       class="block-playlist welcome"
       :key="playlist.id"
     >
-      <div
-        v-if="playlist.coverUrl"
-        class="block-playlist custom-cover"
-        :style="{ backgroundImage: `url(${playlist.coverUrl})` }"
-      >
-        <span class="playlist-name">
-          {{ playlist.name }}
-        </span>
-      </div>
-      <div v-else class="block-playlist welcome front-layer">
-        <span class="playlist-name">
-          {{ playlist.name }}
-        </span>
-      </div>
+      <router-link :to="{ name: 'PlayList', params: { id: playlist.id } }">
+        <div
+          v-if="playlist.coverUrl"
+          class="block-playlist custom-cover"
+          :style="{ backgroundImage: `url(${playlist.coverUrl})` }"
+        >
+          <span class="playlist-name">
+            {{ playlist.name }}
+          </span>
+        </div>
+        <div v-else class="block-playlist welcome front-layer">
+          <span class="playlist-name">
+            {{ playlist.name }}
+          </span>
+        </div>
+      </router-link>
     </div>
   </div>
 
@@ -120,6 +122,7 @@ export default defineComponent({
       name: "",
       summary: "",
       coverUrl: "",
+      tracks: [],
     });
 
     const playlists = ref<Playlist[]>(await GetAllPlaylists());

@@ -35,10 +35,22 @@ namespace MusicPlayer.API.Controllers
             return await _service.AddAsync(model);
         }
 
+        [HttpPost("{playlistId}/{trackId}")]
+        public async Task<TrackModel> Post(int playlistId, int trackId)
+        {
+            return await _service.AddAsync(playlistId, trackId);
+        }
+
         [HttpPut]
         public async Task<GetPlaylistModel> Put(EditPlaylistModel model)
         {
             return await _service.EditAsync(model);
+        }
+
+        [HttpDelete("{playlistId}/{trackId}")]
+        public async Task<int> Delete(int playlistId, int trackId)
+        {
+            return await _service.DeleteAsync(playlistId, trackId);
         }
 
         [HttpDelete("{id}")]
